@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Auditoría de RSE · Liderazgo y Administración</title>
+<meta name="description" content="Taller colaborativo de auditoría de responsabilidad social empresarial (Porter + RSE) con reporte en PDF para Brightspace.">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+</head>
+<body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: una columna de trabajo (máx. 1000px). Fases en pestañas: Equipo → Porter → RSE → Evaluación → Reporte. Estética de expediente de auditoría: sellos, folios y semáforo. */
+:root{--bg:#f4f6f3;--card:#fff;--ink:#17201c;--mut:#59645e;--line:#d9dfd9;--acc:#0f6b4f;--acc2:#e3a21a;--soft:#e8f2ec;--warn:#fff4dc;
+--g:#1a8a4a;--y:#a87400;--r:#c2361f;--blue:#2459c4;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;--sans:Archivo,system-ui,-apple-system,"Segoe UI",sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121815;--card:#1b2420;--ink:#eef3ef;--mut:#a3b0a8;--line:#33403a;--acc:#4fd1a0;--acc2:#ffc04a;--soft:#183328;--warn:#3a2f12;--g:#3ccf7e;--y:#ffc20e;--r:#ff6a5d;--blue:#7fa7ff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121815;--card:#1b2420;--ink:#eef3ef;--mut:#a3b0a8;--line:#33403a;--acc:#4fd1a0;--acc2:#ffc04a;--soft:#183328;--warn:#3a2f12;--g:#3ccf7e;--y:#ffc20e;--r:#ff6a5d;--blue:#7fa7ff;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;font-size:15px}
+.stripe{height:8px;background:repeating-linear-gradient(90deg,var(--acc) 0 40px,var(--acc2) 40px 56px)}
+.wrap{max-width:1000px;margin:0 auto;padding:20px 16px 56px}
+h1{font-size:clamp(1.7rem,5vw,2.6rem);line-height:1.1;margin:.2em 0 .3em;font-weight:800;text-wrap:balance}
+h2{font-size:1.22rem;margin:0 0 .4em;font-weight:800;text-wrap:balance}
+h3{margin:0 0 4px;font-size:1.02rem}
+p{margin:.3em 0}.mut{color:var(--mut)}.sm{font-size:.86em}
+a{color:var(--acc);font-weight:600}
+.card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.stack{display:grid;gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin:10px 0 16px}
+.opt{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 12px;cursor:pointer;text-align:left;font:inherit;min-height:64px}
+.opt b{display:block;font-size:1.05rem}
+.opt[aria-pressed=true]{border-color:var(--acc);background:var(--soft)}
+input[type=text],textarea,select{width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+textarea{min-height:84px;resize:vertical}
+:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:11px 18px;font:800 .98rem var(--sans);cursor:pointer;min-height:44px}
+:root[data-theme="dark"] .btn{color:#0b1410}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn{color:#0b1410}}
+.btn.alt{background:var(--card);color:var(--ink);border:2px solid var(--line)}
+.btn.sm{padding:7px 12px;font-size:.86rem;min-height:38px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.chip{display:inline-block;background:var(--acc2);color:#1d1606;border-radius:99px;padding:3px 12px;font-weight:800;font-size:.82rem}
+.folio{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.pill{display:inline-block;border-radius:99px;padding:2px 10px;font-size:.78rem;font-weight:700;border:1.5px solid var(--line);white-space:nowrap}
+.pill.ok{background:var(--soft);border-color:var(--g);color:var(--g)}
+.pill.wait{background:var(--warn);border-color:var(--y);color:var(--y)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin:14px 0}
+.tab{flex:1 0 auto;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:8px 12px;cursor:pointer;font:600 .86rem var(--sans);text-align:center;min-width:100px;position:relative}
+.tab[aria-selected=true]{border-color:var(--acc);background:var(--soft)}
+.tab small{display:block;color:var(--mut);font-weight:600;font-size:.72rem}
+.tab .dots{position:absolute;top:4px;right:6px;display:flex;gap:2px}
+.tab .dots i{width:7px;height:7px;border-radius:50%;background:var(--blue);display:block}
+.sub{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.sub button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;padding:6px 12px;font:600 .84rem var(--sans);cursor:pointer;min-height:38px}
+.sub button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.sub button.mine{box-shadow:0 0 0 3px var(--acc2)}
+.q{margin:16px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+.f{margin:10px 0}.f label,.lbl{display:block;font-weight:600;margin-bottom:4px}
+.hint{font-size:.86em;color:var(--mut);margin:0 0 6px}
+.meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px;font-size:.82em}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.src{background:var(--soft);border-radius:12px;padding:14px;margin-top:14px}
+.checks{display:grid;gap:2px;margin:8px 0}
+.ck{font-size:.9em}
+.seg{display:flex;gap:4px;flex-wrap:wrap}
+.seg button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 12px;font:700 .85rem var(--sans);cursor:pointer;min-height:40px}
+.seg button[aria-pressed=true]{color:#fff;border-color:transparent}
+.scale{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:8px 0}
+.sc{aspect-ratio:1;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:800 1rem var(--sans);cursor:pointer;min-height:34px;max-width:100%}
+.sc[aria-pressed=true]{color:#fff;border-color:transparent}
+.sc:disabled{opacity:.35;cursor:not-allowed}
+.lock{border:2px dashed var(--line);border-radius:14px;padding:22px;text-align:center}
+.rep{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.sem{display:flex;gap:6px;background:#26302b;padding:7px;border-radius:99px;width:max-content}
+.sem i{width:20px;height:20px;border-radius:50%;background:#46524c;display:block}
+.sem i.on.r{background:#ff4d3d}.sem i.on.y{background:#ffc20e}.sem i.on.g{background:#2ecc71}
+.row{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)}
+.big{font-size:3rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.ans{font-size:.95rem;margin:.5em 0}.ans b{display:block;color:var(--mut);font-weight:600}
+.ul{margin:.3em 0;padding-left:1.2em}
+.ref{padding-left:2em;text-indent:-2em;margin:.5em 0;overflow-wrap:anywhere}
+.tbl{width:100%;border-collapse:collapse;font-size:.9em}
+.tbl th,.tbl td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.tblw{overflow-x:auto}
+.agenda{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.ag{border:2px solid var(--line);border-radius:12px;padding:10px;background:var(--card)}
+.ag.now{border-color:var(--acc2);background:var(--warn)}
+.ag b{font-family:var(--mono);font-size:.8rem;color:var(--mut);display:block}
+.clock{font-family:var(--mono);font-weight:500;font-variant-numeric:tabular-nums}
+.mem{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.mem span{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--line);border-radius:99px;padding:4px 6px 4px 12px;font-weight:600}
+.mem button{border:0;background:transparent;color:var(--mut);cursor:pointer;font:700 1rem var(--sans);min-width:30px;min-height:30px;border-radius:99px}
+.dir{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.dir ul{margin:.3em 0;padding-left:1.1em}.dir li{margin:.25em 0}
+.porter{max-width:520px;margin:0 auto}
+.proj{font-size:1.18em}
+@media(max-width:720px){.rep,.g2,.g3{grid-template-columns:1fr}.agenda{grid-template-columns:1fr 1fr}.sc{font-size:.8rem;border-radius:7px}.scale{gap:3px}}
+.capturing .noprint{display:none!important}
+.call{border-radius:12px;padding:14px 16px;margin:12px 0;border:2px solid}
+.call h3{margin:0 0 4px}.call p{margin:.2em 0}
+.call.ok{background:var(--soft);border-color:var(--g)}
+.call.must{background:var(--warn);border-color:var(--y)}
+.steps{counter-reset:st;list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}
+.steps li{counter-increment:st;display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(st);width:30px;height:30px;border-radius:50%;background:var(--acc);color:var(--card);font-weight:800;display:grid;place-items:center}
+.steps b.t{display:block}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<div class="stripe"></div>
+<div id="root"><div class="wrap"><span class="chip">Auditor de Responsabilidad Social</span><h1>Auditoría de RSE</h1><p class="mut">Cargando el taller…</p></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const {useState,useEffect,useRef}=React, h=React.createElement;
+const MINC=60;
+/* ---------- Empresas asignadas y directorio de fuentes ---------- */
+const EMP=[
+ {n:"Grupo Bimbo",s:"Alimentos y panificación",links:[["Sustentabilidad Grupo Bimbo","https://www.grupobimbo.com/es/sustentabilidad"],["Informes anuales (inversionistas)","https://www.grupobimbo.com/es/inversionistas/reportes/informes-anuales"],["Centro de descargas (materialidad, ODS)","https://www.grupobimbo.com/es/centro-de-descargas"]]},
+ {n:"FEMSA",s:"Comercio (OXXO), bebidas y servicios",links:[["Sostenibilidad FEMSA","https://www.femsa.com/es/sostenibilidad/"],["Informe Anual Integrado 2024 (PDF)","https://www.femsa.com/wp-content/uploads/2025/04/FEMSA_Informe_Anual_2024.pdf"],["Comunicado: Informe Anual Integrado 2025","https://www.femsa.com/es/sala-de-prensa/comunicado/femsa-presenta-su-informe-anual-integrado-2025-y-reafirma-su-enfoque-en-rentabilidad-disciplina-y-crecimiento-sostenible/"]]},
+ {n:"Cemex",s:"Cemento y materiales de construcción",links:[["Reportes para inversionistas","https://www.cemex.com/es/inversionistas/reportes/home"],["Reporte Integrado 2025 (PDF)","https://www.cemex.com/documents/d/cemex/cemex-reporte-integrado-2025-esp"],["Reportes a la BMV","https://www.cemex.com/en/investors/reports/bmv-reports"]]},
+ {n:"Walmart de México y Centroamérica",s:"Autoservicio y comercio minorista",links:[["Relación con inversionistas (Walmex)","https://www.walmex.mx/"],["Sección ASG","https://www.walmex.mx/asg.html"],["Informe Anual 2025 interactivo","https://informes.walmex.mx/2025/es/"]]},
+ {n:"ASUR (Grupo Aeroportuario del Sureste)",s:"Aeropuertos, incluido el de Cancún",links:[["Inversionistas ASUR","https://www.asur.com.mx/inversionistas"],["Informe Anual de Sostenibilidad 2024 (PDF)","https://licitaciones.asur.com.mx/media/Responsabilidad%20Social/Informe%20Anual%20de%20Sostenibilidad%202024.pdf"],["Información en la BMV","https://www.bmv.com.mx/es/emisoras/informacionfinanciera/ASUR-6001-CGEN_CAPIT"]]}];
+const DIRG=[
+ ["Mercado y competencia (Porter)",[["Bolsa Mexicana de Valores: reportes de emisoras","https://www.bmv.com.mx/"],["COFECE: competencia económica","https://www.cofece.mx/"],["INEGI: estadísticas por sector","https://www.inegi.org.mx/"],["Expansión: noticias de empresas","https://expansion.mx/empresas"],["El Economista: empresas","https://www.eleconomista.com.mx/empresas/"]]],
+ ["Responsabilidad social (RSE)",[["Cemefi: Distintivo ESR","https://www.cemefi.org/distintivo-esr/"],["Pacto Global México (ONU)","https://pactoglobal.org.mx/"],["CDP: divulgación ambiental","https://www.cdp.net/es"],["GRI: estándares de reporte","https://www.globalreporting.org/"],["Centro de Información sobre Empresas y Derechos Humanos","https://www.business-humanrights.org/es/"]]],
+ ["Consumidor, gobierno y academia",[["PROFECO","https://www.gob.mx/profeco"],["SEMARNAT","https://www.gob.mx/semarnat"],["Google Académico","https://scholar.google.com/"]]]];
+/* ---------- Cinco fuerzas de Porter ---------- */
+const PORTER=[
+ {k:"riv",n:"Rivalidad entre competidores",s:"Rivalidad",qs:[["¿Quiénes son sus 3 principales competidores y qué participación de mercado tienen?","Ej.: compite con X, Y y Z; según su informe anual tiene cerca de N % del mercado en México."],["¿Cómo compiten: por precio, marca, innovación o cobertura? ¿El mercado crece o está maduro?","Ej.: la competencia es por cobertura y precio; el mercado crece poco, por lo que la rivalidad es intensa."]]},
+ {k:"new",n:"Amenaza de nuevos entrantes",s:"Nuevos entrantes",qs:[["¿Qué barreras de entrada hay (inversión, marca, regulación, concesiones, distribución)?","Ej.: se requieren plantas costosas y permisos ambientales, lo que frena a nuevos competidores."],["¿Han entrado competidores nuevos en los últimos años? ¿Les ha ido bien?","Ej.: entraron marcas importadas en 2023, pero su participación sigue siendo baja."]]},
+ {k:"pro",n:"Poder de negociación de proveedores",s:"Proveedores",qs:[["¿Cuáles son sus insumos clave y quién se los vende? ¿Son pocos o muchos proveedores?","Ej.: depende del trigo y la energía; hay pocos proveedores grandes de trigo."],["¿Puede cambiar de proveedor fácilmente? ¿Está integrada hacia atrás?","Ej.: produce parte de sus empaques, lo que reduce el poder de los proveedores."]]},
+ {k:"cli",n:"Poder de negociación de clientes",s:"Clientes",qs:[["¿Quiénes son sus clientes (consumidor final, empresas, gobierno)? ¿Están concentrados?","Ej.: vende a millones de consumidores y a cadenas de autoservicio que concentran gran parte de las ventas."],["¿Qué tan fácil es para el cliente cambiarse a otra marca? ¿Es sensible al precio?","Ej.: cambiar cuesta poco y el cliente compara precios, así que su poder es alto."]]},
+ {k:"sus",n:"Amenaza de productos sustitutos",s:"Sustitutos",qs:[["¿Qué otros productos o servicios satisfacen la misma necesidad?","Ej.: la tortilla, el pan artesanal y los snacks saludables sustituyen al pan de caja."],["¿Los sustitutos son más baratos o mejores? ¿Hay tendencias que los favorezcan?","Ej.: la tendencia hacia lo saludable favorece a los sustitutos con menos azúcar."]]}];
+const INT=["Baja","Media","Alta"];
+/* ---------- Áreas de RSE ---------- */
+const RSE=[
+ {k:"A",n:"Ambiental",qs:[["¿Qué metas ambientales tiene (agua, energía, emisiones) y cuánto ha avanzado? Incluye al menos una cifra.","Ej.: reporta N % de energía renovable en 2024 y la meta de llegar a 100 % en 2030."],["¿Cómo gestiona residuos, empaques o economía circular?","Ej.: el N % de sus empaques es reciclable; tiene programa de acopio con…"],["¿Hay controversias, multas o críticas ambientales? ¿Qué dicen fuentes independientes?","Ej.: una ONG señaló… / No encontramos sanciones públicas en…"]]},
+ {k:"S",n:"Social",qs:[["¿Cómo trata a sus colaboradores (empleos, capacitación, seguridad, diversidad)?","Ej.: emplea a N personas; reporta N horas de capacitación por colaborador."],["¿Qué hace por la comunidad y cómo mide su impacto?","Ej.: su fundación invirtió N millones en…; mide resultados con…"],["¿Cómo cuida a sus clientes o consumidores (salud, seguridad, accesibilidad)?","Ej.: reformuló productos para reducir azúcar; atiende quejas en PROFECO…"]]},
+ {k:"G",n:"Gobernanza y ética",qs:[["¿Cómo está gobernada (consejo, consejeros independientes, cotiza en BMV)?","Ej.: su consejo tiene N miembros, N independientes; cotiza en la BMV con la clave…"],["¿Tiene código de ética, línea de denuncia y política anticorrupción?","Ej.: publica su código de ética; tiene línea de denuncia anónima operada por un tercero."],["¿Qué tan transparente es (reporte GRI/SASB, verificación externa, distintivo ESR)?","Ej.: su informe sigue GRI y está verificado por un tercero; tiene el Distintivo ESR."]]},
+ {k:"E",n:"Económico y cadena de valor",qs:[["¿Cómo le fue el último año (ventas, utilidad, empleos generados)?","Ej.: ventas por N millones de pesos, N % más que el año anterior."],["¿Cómo trata a proveedores (locales, pequeños, plazos de pago)?","Ej.: el N % de sus compras es a proveedores nacionales; tiene programa de desarrollo de proveedores."],["Conecta con Porter: ¿usa la RSE para competir mejor (diferenciación, reputación, costos)?","Ej.: frente a una rivalidad alta, su reputación sustentable le ayuda a diferenciarse ante…"]]}];
+const AGENDA=[["0–5 min","Equipo","Registrar integrantes y repartir tareas"],["5–20 min","Porter","5 fuerzas, en paralelo"],["20–45 min","RSE","4 áreas, en paralelo"],["45–55 min","Evaluación","Calificar y concluir"],["55–60 min","Reporte","Presentar hallazgos"]];
+const AGMIN=[0,5,20,45,55,60];
+/* ---------- Grupos y listas (apellidos, nombres). Liderazgo usa los equipos 1–5 y Administración los 6–10 ---------- */
+const GRUPOS=[{k:"L",n:"Liderazgo",off:0,lista:[["Álvarez García","Sofía Ximena"],["Morales Fernández","Ariannys Valentina"],["Castillo Palma","Carlos Joaquín"],["Coba Cob","Ingrid Ixchel"],["Velasco Ancona","Andrea Isabel"],["García Navarrete","Yardley Saint"],["Fernández González","Renata"],["Salas Palacios","Luis Ángel"],["Gratacós Gallegos","Pau"],["Pérez Ribadeneira","Joaquín Estuardo"],["Chevez Rodríguez","Héctor"],["Rodríguez Cardoso","Victoria Carolina"],["Esquivel Jácome","Mario Yael"],["Dzul Trinidad","Irán"],["González Varillas","Daniel"],["Ortega Colmenares","Arianna Isabella"]]},
+ {k:"A",n:"Administración",off:5,lista:[["Escobar Ramos","José René"],["Tapia Campos","Camila"],["Treviño Martínez","Emiliano"],["Flores González","Samantha"],["Tec Guerrero","Camila Yamilet"],["Rivera","Daniella Valentina"],["Barrera Reyes","Frida Sofía"],["González Ulloa","Luis Diego"],["Neira Bone","Camilo Gabriel"],["Ruiz Pelagio","Jorge"],["Ruiz Mendoza","Santiago"],["Willis Salvatierra","Maya"],["Alcocer Hanson","Scott Allen"],["Amador Quiroz","Sebastián David"],["Tame Caram","Anuar"],["Fuentes Camacho","Emiliano"],["Vigueras Morales","Lenny Antonio"],["Casarrubias Martínez","Mauricio Charbel"],["Gorocica Burelos","Juan Antonio"],["Gascón García Marín","Mario Patricio"],["Sarabia Sánchez","Maximiliano"],["Santos Rojas","Vasti Sarai"]]}];
+const NT=10;
+const ROLES=[{k:"coord",i:"🧭",n:"Coordinación",d:"Organiza al equipo, cuida que todo quede validado y entrega el reporte final."},
+ {k:"porter",i:"⚔️",n:"Análisis Porter",d:"Lidera las 5 fuerzas y revisa que cada una tenga datos e intensidad."},
+ {k:"rse",i:"🌱",n:"Auditoría RSE",d:"Lidera las 4 áreas de RSE y busca evidencia independiente."},
+ {k:"fuentes",i:"📚",n:"Fuentes y APA",d:"Verifica que cada fuente esté completa y que las referencias APA sean correctas."},
+ {k:"dictamen",i:"✍️",n:"Redacción del dictamen",d:"Redacta la relación Porter + RSE y el dictamen final con los aportes de todos."}];
+const rolesOf=(meta,id)=>id?ROLES.filter(r=>meta&&meta.roles&&meta.roles[r.k]===id).map(r=>r.n):[];
+const grpOf=t=>GRUPOS[t>5?1:0];
+const empOf=t=>EMP[(t-1)%5];
+const loc=t=>(t-1)%5+1;
+const tLab=t=>grpOf(t).n+" · Equipo "+loc(t);
+const norm=x=>String(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/\s+/g," ").trim();
+const fullName=([ap,no])=>no+" "+ap;
+const rosterOf=g=>g.lista.slice().sort((a,b)=>a[0].localeCompare(b[0],"es"));
+/* quién está registrado en qué equipo dentro de un grupo: nombre normalizado -> {t,id,n} */
+const regMap=(g,teams)=>{const o={};for(let i=1;i<=5;i++){const t=g.off+i;members(teams[t]).forEach(([id,x])=>{const k=norm(x.n);if(!o[k])o[k]={t,id,n:x.n};});}return o;};
+
+/* ---------- utilidades ---------- */
+const setIn=(o,p,v)=>{if(!p.length)return v;const c=(o&&typeof o==="object"&&!Array.isArray(o))?o:{};return {...c,[p[0]]:setIn(c[p[0]],p.slice(1),v)};};
+const getIn=(o,p)=>p.reduce((x,k)=>x==null?undefined:x[k],o);
+const nest=(p,v)=>p.reduceRight((a,k)=>({[k]:a}),v);
+const str=v=>typeof v==="string"?v:"";
+const col=n=>n<=4?"r":n<=7?"y":"g";
+const lab=n=>n<=4?"Atención urgente":n<=7?"En desarrollo":"Buen desempeño";
+const nivel=g=>g>=8?"ALTO":g>=5?"MEDIO":"BAJO";
+const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
+const icol=v=>v==="Alta"?"r":v==="Media"?"y":v==="Baja"?"g":null;
+const ans=(d,i)=>str(getIn(d,["a","q"+i]));
+const srcOk=s=>!!(s&&str(s.aut).trim()&&str(s.yr).trim()&&str(s.tit).trim()&&/^https?:\/\/\S+\.\S+/.test(str(s.url).trim()));
+const ref=s=>(str(s.aut)||"Autor")+". ("+(str(s.yr)||"s. f.")+"). "+(str(s.tit)||"Sin título")+". "+str(s.url);
+const members=m=>Object.entries((m&&m.mem)||{}).filter(([,x])=>x&&!x.del&&str(x.n).trim()).sort((a,b)=>(a[1].t||0)-(b[1].t||0));
+function checks(d,def,isP){
+ const it=[["Responsable asignado",!!str(d&&d.resp)],
+  [def.qs.length+" respuestas de al menos "+MINC+" caracteres",def.qs.every((_,i)=>ans(d,i).trim().length>=MINC)],
+  ["Fuente completa con URL (autor, año, título, liga)",srcOk(d&&d.src)]];
+ if(isP)it.splice(2,0,["Intensidad de la fuerza elegida",INT.includes(str(d&&d.int))]);
+ const ok=it.every(x=>x[1]);
+ return {it,ok,done:it.filter(x=>x[1]).length,n:it.length,val:ok&&!!(d&&d.v)};
+}
+const scoreOf=d=>{const v=d&&d.s;return typeof v==="number"?v:null;};
+const evalOk=d=>scoreOf(d)!==null&&str(d&&d.just).trim().length>=40;
+const attr=p=>{const v=p.map(d=>INT.indexOf(str(d&&d.int))+1).filter(x=>x>0);if(v.length<5)return null;const a=avg(v);return a>=2.4?"Baja":a<=1.6?"Alta":"Media";};
+const mmss=s=>{s=Math.max(0,Math.floor(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");};
+const fmt=t=>{try{return new Date(t).toLocaleString("es-MX",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"})}catch(e){return ""}};
+const clean=x=>JSON.parse(JSON.stringify(x||{}));
+const lastOf=(ents,n)=>ents.filter(e=>e.team===n).sort((a,b)=>(b.t||0)-(a.t||0))[0]||null;
+const csvq=v=>{v=String(v==null?"":v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
+const ago=t=>{if(!t)return "";const d=Date.now()-t;if(d<60000)return "hace un momento";if(d<3600000)return "hace "+Math.floor(d/60000)+" min";return fmt(t);};
+function Ed({e}){return e&&e.t?h("p",{className:"hint ed",style:{margin:"2px 0 0"}},"✎ "+(str(e.n)||"Alguien")+" · "+ago(e.t)):null;}
+const lastEd=(d,pre)=>Object.entries((d&&d.ed)||{}).filter(([k])=>k.startsWith(pre)).map(([,v])=>v).filter(v=>v&&v.t).sort((a,b)=>b.t-a.t)[0]||null;
+function partOf(meta,P,R){const o={};const add=d=>Object.values((d&&d.ed)||{}).forEach(e=>{if(!e||!e.m)return;const x=o[e.m]||(o[e.m]={n:str(e.n),c:0,last:0});x.c++;if((e.t||0)>x.last){x.last=e.t;if(str(e.n))x.n=e.n;}});
+ add(meta);(P||[]).forEach(add);(R||[]).forEach(add);
+ members(meta).forEach(([id,x])=>{if(!o[id])o[id]={n:x.n,c:0,last:0};else o[id].n=x.n;});
+ return Object.entries(o).sort((a,b)=>b[1].c-a[1].c);}
+const localDl={save:async({filename,data})=>{const ty=/\.pdf$/.test(filename)?"application/pdf":/\.csv$/.test(filename)?"text/csv;charset=utf-8":/\.json$/.test(filename)?"application/json":"text/html;charset=utf-8";const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:ty}));a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);}};
+function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+function Sem({n}){const c=col(n);return h("div",{className:"sem",role:"img","aria-label":lab(n)},["r","y","g"].map(k=>h("i",{key:k,className:k+(k===c?" on":"")})));}
+function Radar({vals}){
+ const cx=170,cy=150,R=100,ang=[-90,0,90,180].map(d=>d*Math.PI/180);
+ const pt=(i,v)=>[cx+Math.cos(ang[i])*R*v/10,cy+Math.sin(ang[i])*R*v/10];
+ const anc=["middle","start","middle","end"],off=[[0,-12],[10,4],[0,20],[-10,4]];
+ return h("svg",{viewBox:"-40 0 420 300",width:"100%",role:"img","aria-label":"Radar de las cuatro áreas de RSE"},
+  [2.5,5,7.5,10].map(r=>h("polygon",{key:r,points:ang.map((_,i)=>pt(i,r).join(",")).join(" "),fill:"none",stroke:"var(--line)",strokeWidth:1.5})),
+  ang.map((_,i)=>h("line",{key:i,x1:cx,y1:cy,x2:pt(i,10)[0],y2:pt(i,10)[1],stroke:"var(--line)"})),
+  h("polygon",{points:vals.map((v,i)=>pt(i,v).join(",")).join(" "),fill:"var(--acc)",fillOpacity:.25,stroke:"var(--acc)",strokeWidth:3}),
+  vals.map((v,i)=>h("circle",{key:i,cx:pt(i,v)[0],cy:pt(i,v)[1],r:6,fill:"var(--acc)"})),
+  RSE.map((r,i)=>h("text",{key:"t"+i,x:pt(i,10)[0]+off[i][0],y:pt(i,10)[1]+off[i][1],textAnchor:anc[i],fill:"var(--ink)",fontSize:13,fontWeight:700,fontFamily:"Archivo,sans-serif"},r.n.split(" ")[0]+" "+vals[i])));
+}
+function PorterMap({p}){
+ const box=(i,x,y)=>{const d=p[i]||{},v=str(d.int),c=icol(v);return h("g",{key:i},
+  h("rect",{x,y,width:150,height:62,rx:10,fill:c?`var(--${c})`:"var(--card)",fillOpacity:c?.18:1,stroke:c?`var(--${c})`:"var(--line)",strokeWidth:2}),
+  h("text",{x:x+75,y:y+26,textAnchor:"middle",fontSize:12.5,fontWeight:700,fill:"var(--ink)",fontFamily:"Archivo,sans-serif"},PORTER[i].s),
+  h("text",{x:x+75,y:y+46,textAnchor:"middle",fontSize:12,fontWeight:700,fill:c?`var(--${c})`:"var(--mut)",fontFamily:"Archivo,sans-serif"},v?"Intensidad "+v.toLowerCase():"Sin dato"));};
+ const ar=(x1,y1,x2,y2,k)=>h("line",{key:k,x1,y1,x2,y2,stroke:"var(--mut)",strokeWidth:2,markerEnd:"url(#ah)"});
+ return h("svg",{viewBox:"0 0 520 300",width:"100%",role:"img","aria-label":"Mapa de las cinco fuerzas de Porter",className:"porter"},
+  h("defs",null,h("marker",{id:"ah",viewBox:"0 0 10 10",refX:9,refY:5,markerWidth:6,markerHeight:6,orient:"auto"},h("path",{d:"M0 0L10 5L0 10z",fill:"var(--mut)"}))),
+  ar(260,74,260,114,"a1"),ar(260,226,260,186,"a2"),ar(162,150,182,150,"a3"),ar(358,150,338,150,"a4"),
+  box(1,185,10),box(0,185,119),box(4,185,228),box(2,8,119),box(3,362,119));
+}
+
+function Txt({id,l,hint,v,on,area,ph,min}){
+ const n=str(v).trim().length;
+ return h("div",{className:"f"},l&&h("label",{htmlFor:id},l),hint&&h("p",{className:"hint"},hint),
+  area?h("textarea",{id,value:str(v),placeholder:ph,onChange:e=>on(e.target.value)}):h("input",{id,type:"text",value:str(v),placeholder:ph,onChange:e=>on(e.target.value)}),
+  min?h("div",{className:"meta"},h("span",{style:{color:n>=min?"var(--g)":"var(--mut)",fontWeight:600}},n>=min?"✓ "+n+" caracteres":n+" / "+min+" caracteres mínimos")):null);
+}
+function Directory({team}){
+ const own=team?[empOf(team)]:EMP;
+ return h("div",{className:"card"},h("h2",null,"Directorio de fuentes"),
+  h("p",{className:"mut"},"Empiecen por el informe de la empresa y después contrasten con al menos una fuente independiente."),
+  h("div",{className:"dir",style:{marginTop:10}},
+   own.map((e,i)=>h("div",{key:e.n},h("h3",null,(team?"Su empresa: ":"Equipo "+(i+1)+" · ")+e.n),h("ul",null,e.links.map(([t,u])=>h("li",{key:u},h("a",{href:u,target:"_blank",rel:"noopener"},t)))))),
+   DIRG.map(([t,l])=>h("div",{key:t},h("h3",null,t),h("ul",null,l.map(([a,u])=>h("li",{key:u},h("a",{href:u,target:"_blank",rel:"noopener"},a))))))));
+}
+function Clock(){return null;}
+function Agenda({clase,now}){
+ const min=clase&&clase.start?(now-clase.start)/60000:-1;
+ return h("div",{className:"agenda"},AGENDA.map(([t,n,d],i)=>h("div",{key:i,className:"ag"},h("b",null,"Paso "+(i+1)),h("div",{style:{fontWeight:800}},n),h("div",{className:"sm mut"},d))));
+}
+
+/* ---------- Instrucciones de la actividad ---------- */
+const PASOS=[
+ ["Registren a su equipo","Una persona del equipo elige el grupo (Liderazgo o Administración) y la empresa, marca a todos los integrantes en la lista y presiona «Registrar integrantes»."],
+ ["Entra con tu nombre","Cada integrante abre esta misma liga desde su propio celular o computadora, elige su grupo y su equipo, toca su nombre en «¿Quién eres tú?» y entra a la auditoría."],
+ ["Asuman sus responsabilidades","En la pestaña Equipo cada integrante asume una responsabilidad (coordinación, Porter, RSE, fuentes o dictamen) y asignen un responsable a cada una de las 5 fuerzas de Porter y de las 4 áreas de RSE. Con 4 o 5 integrantes, cada quien toma 1 o 2 fuerzas y 1 área."],
+ ["Fase 1 · Porter","Respondan las 2 preguntas de cada fuerza (mínimo 60 caracteres cada una, con datos concretos), elijan su intensidad (baja, media o alta) y capturen la fuente: autor, año, título y liga. Cuando todo esté en verde, presionen «Validar»."],
+ ["Fase 2 · RSE","Se abre al validar las 5 fuerzas. Respondan las 3 preguntas de cada área (ambiental, social, gobernanza y económica) con cifras y una fuente con liga. Procuren que al menos una fuente sea independiente de la empresa. Validen cada área."],
+ ["Fase 3 · Evaluación","Se abre al validar las 4 áreas. Califiquen cada área del 1 al 10, justifiquen con un dato y su fuente, escriban una recomendación y redacten en equipo la relación Porter + RSE y el dictamen final."],
+ ["Reporte","Presionen «Generar reporte final», revisen que aparezcan los nombres de todos los integrantes y una sola persona presiona «Entregar reporte final» para que la docente lo reciba. Después cada quien usa «Descargar PDF» (o «Descargar HTML» si el PDF no funciona)."],
+ ["Entrega individual en Brightspace","Cada integrante sube el reporte en la actividad de Brightspace, aunque sea el mismo archivo del equipo."]];
+function SubirBS({fname,btn}){
+ return h("div",{className:"call ok"},h("h3",null,"📤 Lo que subes a Brightspace"),
+  h("p",null,h("b",null,"Un solo archivo PDF por alumno:")," el reporte de auditoría de tu equipo con tu nombre. Aunque el reporte sea del equipo, ",h("b",null,"cada integrante lo sube con su propia cuenta"),"."),
+  h("ol",{className:"ul"},
+   h("li",null,"Cuando su equipo termine la evaluación, presiona ",h("b",null,"«📄 Mi reporte»"),"."),
+   h("li",null,"Presiona ",h("b",null,"«Descargar PDF para Brightspace»"),". El archivo ya lleva tu nombre, tu grupo y tu equipo."),
+   h("li",null,"En Brightspace abre la actividad ",h("b",null,"Auditoría de RSE"),", presiona «Agregar archivo», elige el PDF y envía."),
+   h("li",null,"La persona con la responsabilidad de ",h("b",null,"Coordinación")," además presiona «Entregar reporte final» para que la docente reciba la versión del equipo.")),
+  fname?h("p",{className:"sm"},"Tu archivo se llamará: ",h("code",{style:{overflowWrap:"anywhere"}},fname+".pdf")):null,
+  btn||null);
+}
+function QueSePide(){
+ const ex=(t,mala,buena,por)=>h("div",{className:"ans",style:{marginTop:10}},h("b",null,t),
+  h("div",{className:"g2",style:{marginTop:6}},
+   h("div",{className:"call must",style:{margin:0}},h("h3",null,"❌ Respuesta débil"),h("p",null,mala)),
+   h("div",{className:"call ok",style:{margin:0}},h("h3",null,"✅ Respuesta que se pide"),h("p",null,buena))),
+  h("p",{className:"sm mut",style:{marginTop:6}},por));
+ return h("div",{className:"card"},h("h2",null,"¿Qué se pide en esta actividad?"),
+  h("p",null,"Su equipo actúa como ",h("b",null,"auditor de responsabilidad social"),": investiga a una empresa mexicana real, analiza el entorno en el que compite y dictamina, con evidencia, qué tan socialmente responsable es."),
+  h("h3",{style:{marginTop:12}},"Producto final: un reporte de auditoría con"),
+  h("ol",{className:"ul"},
+   h("li",null,h("b",null,"Las 5 fuerzas de Porter:")," 2 respuestas por fuerza, la intensidad (baja, media o alta) y una fuente."),
+   h("li",null,h("b",null,"Auditoría de RSE en 4 áreas"),"(ambiental, social, gobernanza y económica): 3 respuestas por área con cifras y una fuente."),
+   h("li",null,h("b",null,"Evaluación:")," calificación del 1 al 10 por área, justificada con un dato, y una recomendación concreta."),
+   h("li",null,h("b",null,"Relación Porter + RSE y dictamen final")," redactados en equipo."),
+   h("li",null,h("b",null,"Referencias en APA 7")," (se generan solas con las fuentes que capturen)."),
+   h("li",null,h("b",null,"Integrantes y responsabilidades:")," cada quien asume una responsabilidad y su participación queda registrada.")),
+  h("h3",{style:{marginTop:12}},"Qué se evalúa"),
+  h("ul",{className:"ul"},
+   h("li",null,"Respuestas con datos concretos (cifras, años, nombres), no opiniones generales."),
+   h("li",null,"Cada fuerza y área con su fuente completa: autor, año, título y liga."),
+   h("li",null,"Al menos una fuente independiente de la empresa (prensa, ONG, gobierno o academia)."),
+   h("li",null,"Un dictamen congruente con la evidencia y con las calificaciones."),
+   h("li",null,"Participación de todos los integrantes en su responsabilidad.")),
+  h("h3",{style:{marginTop:12}},"Ejemplos (empresa ficticia)"),
+  ex("Porter · Rivalidad entre competidores","Tiene mucha competencia y el mercado es difícil.","Compite con dos grandes panificadoras nacionales y con panaderías locales; según la cámara del sector tiene cerca del 12 % del mercado regional y el mercado crece solo 2 % al año, por lo que la rivalidad es alta.","La buena respuesta nombra competidores, da una cifra, cita de dónde sale y concluye la intensidad."),
+  ex("RSE · Ambiental","La empresa cuida mucho el medio ambiente y recicla.","Reporta que el 30 % de la energía de su planta es solar y que recicla el 70 % de sus residuos (Informe anual 2025), pero una ONG local la señaló por el plástico de un solo uso que llega a las playas.","Contrasta lo que dice la empresa con una fuente independiente y usa cifras verificables."),
+  ex("Evaluación · Justificación","Le ponemos 5 porque podría mejorar.","5/10: recicla el 70 % de sus residuos (Panificadora del Caribe, 2025), pero no reporta emisiones ni tiene metas verificadas por un tercero.","La calificación se sostiene en un dato con su cita (Autor, año)."),
+  h("p",{className:"mut sm",style:{marginTop:10}},"¿Quieren ver un reporte completo? Presionen «Ver ejemplo resuelto» al final de la sección de registro."));
+}
+function Instr({clase,now}){
+ return h("div",{className:"card"},h("h2",null,"Instrucciones de la actividad"),
+  h(Agenda,{clase,now}),
+  h("div",{className:"call ok"},h("h3",null,"✅ Sí está permitido trabajar en equipo y al mismo tiempo"),
+   h("p",null,"Todos los integrantes trabajan simultáneamente, cada quien desde su dispositivo. Pueden ver y editar todas las secciones, ayudarse entre sí y consultar las fuentes del directorio o cualquier otra fuente confiable. Los cambios se guardan solos y se ven en vivo en las pantallas de todo el equipo."),
+   h("p",{className:"sm mut"},"Cada responsable cuida que su parte quede validada, pero la evaluación, la relación Porter + RSE y el dictamen se construyen entre todos.")),
+  h("ol",{className:"steps"},PASOS.map(([t,d],i)=>h("li",{key:i},h("div",null,h("b",{className:"t"},t),h("span",{className:"sm"},d))))),
+  h("div",{className:"call must"},h("h3",null,"⚠️ Todos deben subir el reporte, aunque se haya hecho en equipo"),
+   h("p",null,"La entrega es individual: cada integrante descarga el PDF del reporte de su equipo y lo sube con su propia cuenta a la actividad correspondiente en Brightspace. Quien no lo suba no tendrá calificación en esta actividad, aunque su nombre aparezca en el reporte."),
+   h("p",{className:"sm mut"},"Sugerencia de nombre de archivo: Equipo#_Empresa_Auditoria_RSE_TuNombre.pdf")));
+}
+function DeliverNote(){
+ return h("div",{className:"call must noprint",style:{marginTop:12}},h("h3",null,"⚠️ Entrega individual en Brightspace"),h("p",null,"Presiona «Descargar PDF para Brightspace»: el archivo lleva tu nombre, tu grupo, tu equipo y las responsabilidades de cada integrante. Súbelo con tu propia cuenta; cada integrante hace su propia entrega."));
+}
+
+/* ---------- Inicio ---------- */
+function Start({teams,go,addMem,demo,live,isAdmin,openPanel,clase,now}){
+ const [gk,setGk]=useState(()=>lsGet("aud-grp")||""),[t,setT]=useState(null),[who,setWho]=useState(""),[pick,setPick]=useState([]),[nw,setNw]=useState(""),[busy,setBusy]=useState(false),[err,setErr]=useState("");
+ const g=GRUPOS.find(x=>x.k===gk)||null;
+ const reg=g?regMap(g,teams):{};
+ const ms=t?members(teams[t]):[];
+ const avail=g?rosterOf(g).map(fullName).filter(n=>!reg[norm(n)]):[];
+ const extra=pick.filter(n=>!avail.includes(n));
+ useEffect(()=>{setPick([]);setErr("");const m=t?lsGet("aud-me-"+t):"";setWho(m&&ms.some(([id])=>id===m)?m:"");},[t]);
+ useEffect(()=>{if(who&&!ms.some(([id])=>id===who))setWho("");},[ms.length]);
+ const pickG=k=>{setGk(k);lsSet("aud-grp",k);setT(null);};
+ const tog=n=>setPick(p=>p.includes(n)?p.filter(x=>x!==n):p.concat(n));
+ const register=async()=>{if(!pick.length||busy)return;setBusy(true);setErr("");try{await addMem(t,pick);setPick([]);}catch(e){setErr("No se pudo registrar. Revisa tu conexión e inténtalo de nuevo.");}setBusy(false);};
+ return h("div",{className:"wrap"},
+  h("div",{className:"bar"},h("span",{className:"chip"},"Auditor de Responsabilidad Social")),
+  h("h1",null,"Auditoría de RSE"),
+  h("p",{className:"mut",style:{maxWidth:"68ch"}},"Cada equipo audita una empresa mexicana. Primero analizan su entorno competitivo con las 5 fuerzas de Porter, después auditan su responsabilidad social en 4 áreas y al final la evalúan. Todos los integrantes trabajan al mismo tiempo desde su propio dispositivo y, al final, cada uno sube el reporte a Brightspace."),
+  (()=>{let L=null;try{L=JSON.parse(lsGet("aud-last")||"null")}catch(e){}const x=L&&members(teams[L.t]).find(([id])=>id===L.id);
+   return x?h("div",{className:"call ok"},h("h3",null,"👋 Hola, "+x[1].n),h("p",null,tLab(L.t)+" · "+empOf(L.t).n),
+    h("button",{className:"btn",style:{marginTop:8},onClick:()=>go(L.t,L.id,null)},"Continuar donde me quedé")):null;})(),
+  h("div",{className:"g3",style:{margin:"14px 0"}},
+   [["1","Regístrate","Elige grupo y empresa, marquen a su equipo y toca tu nombre."],["2","Trabajen juntos","Cada quien asume una responsabilidad; todo se guarda solo."],["3","Sube tu PDF","Descarga «Mi reporte» y súbelo a Brightspace."]].map(([n,t,d])=>h("div",{key:n,className:"ag"},h("b",null,"Paso "+n),h("div",{style:{fontWeight:800}},t),h("div",{className:"sm mut"},d)))),
+  h("div",{className:"card",style:{marginTop:16}},
+   h("h2",null,"1. Elige tu grupo"),
+   h("div",{className:"grid"},GRUPOS.map(x=>{const c=Object.keys(regMap(x,teams)).length;return h("button",{key:x.k,className:"opt","aria-pressed":gk===x.k,onClick:()=>pickG(x.k)},
+    h("span",{className:"folio"},"Grupo"),h("b",null,x.n),h("span",{className:"mut sm"},c+" de "+x.lista.length+" registrados"));})),
+   g&&h("div",null,
+    h("h2",{style:{marginTop:6}},"2. Elige tu equipo"),
+    h("div",{className:"grid"},EMP.map((e,i)=>{const n=g.off+i+1,c=members(teams[n]).length;return h("button",{key:n,className:"opt","aria-pressed":t===n,onClick:()=>setT(n)},
+     h("span",{className:"folio"},"Equipo "+(i+1)),h("b",null,e.n),h("span",{className:"mut sm"},e.s+(c?" · "+c+" integrantes":"")));}))),
+   g&&t&&h("div",null,
+    h("h2",{style:{marginTop:6}},"3. Integrantes del equipo"),
+    ms.length?h("div",null,h("p",{className:"mut sm"},"Ya registrados:"),h("div",{className:"mem"},ms.map(([id,x])=>h("span",{key:id,style:{paddingRight:12}},"✓ "+x.n)))):null,
+    h("p",{className:"mut sm",style:{marginTop:8}},ms.length?"¿Falta alguien? Márcalo y presiona «Registrar integrantes».":"Marquen a todos los integrantes del equipo, incluido tú, y presionen «Registrar integrantes». Solo aparecen quienes aún no tienen equipo."),
+    avail.length?h("div",{className:"grid"},avail.map(n=>h("button",{key:n,className:"opt","aria-pressed":pick.includes(n),onClick:()=>tog(n)},h("b",null,(pick.includes(n)?"☑ ":"☐ ")+n)))):h("p",{className:"mut"},"Todos los alumnos de la lista ya tienen equipo."),
+    extra.length?h("p",{className:"mut sm"},"También se agregará: "+extra.join(", ")):null,
+    h("details",{style:{marginTop:4}},h("summary",{className:"mut sm",style:{cursor:"pointer"}},"¿Alguien no está en la lista?"),
+     h("div",{className:"bar",style:{alignItems:"flex-end",justifyContent:"flex-start"}},
+      h("div",{style:{flex:"1 1 240px"}},h(Txt,{id:"nuevo",l:"Nombre completo",v:nw,on:setNw,ph:"Nombre y apellidos"})),
+      h("button",{className:"btn alt",style:{marginBottom:10},disabled:nw.trim().length<3||!!reg[norm(nw)]||pick.some(x=>norm(x)===norm(nw)),onClick:()=>{setPick(p=>p.concat(nw.trim()));setNw("");}},"Agregar a la selección"))),
+    h("button",{className:"btn",style:{marginTop:8},disabled:!pick.length||busy,onClick:register},busy?"Registrando…":"Registrar integrantes"+(pick.length?" ("+pick.length+")":"")),
+    err?h("p",{className:"sm",role:"alert",style:{color:"var(--r)"}},err):null),
+   g&&t&&ms.length?h("div",null,
+    h("h2",{style:{marginTop:16}},"4. ¿Quién eres tú?"),
+    h("div",{className:"grid"},ms.map(([id,x])=>h("button",{key:id,className:"opt","aria-pressed":who===id,onClick:()=>setWho(id)},h("b",null,x.n)))),
+    h("button",{className:"btn",disabled:!who,onClick:()=>go(t,who,null)},"Entrar a la auditoría")):null,
+   h("div",{style:{display:"flex",gap:10,flexWrap:"wrap",marginTop:12}},h("button",{className:"btn alt",onClick:demo},"Ver ejemplo resuelto")),
+   h("p",{className:"mut sm",style:{marginTop:10}},live?"🟢 En vivo: todo se guarda solo y se comparte con tu equipo.":"⚪ Sin conexión al almacén compartido: el trabajo se queda solo en esta pantalla.")),
+  h("div",{style:{marginTop:16}},h(SubirBS,{})),
+  h("details",{className:"card",style:{marginTop:16}},h("summary",{style:{cursor:"pointer",fontWeight:800}},"📋 ¿Qué se pide? Criterios y ejemplos"),h("div",{style:{marginTop:10}},h(QueSePide))),
+  h("details",{className:"card",style:{marginTop:16}},h("summary",{style:{cursor:"pointer",fontWeight:800}},"🧭 Instrucciones paso a paso"),h("div",{style:{marginTop:10}},h(Instr,{clase,now}))),
+  h("details",{className:"card",style:{marginTop:16}},h("summary",{style:{cursor:"pointer",fontWeight:800}},"🔗 Directorio de fuentes"),h("div",{style:{marginTop:10}},h(Directory,{team:0}))),
+  live&&h("div",{className:"card",style:{marginTop:16}},
+   h("div",{className:"bar"},h("h2",{style:{margin:0}},"Panel docente"),h("button",{className:"btn alt sm",onClick:openPanel},"Abrir panel")),
+   h("p",{className:"mut sm"},isAdmin?"Sigue el avance, la participación y las entregas de los equipos de cada grupo.":"Avance de los equipos en este momento.")));
+}
+
+/* ---------- Panel docente ---------- */
+function Panel({teams,all,back,openTeam,isAdmin,clase,setClase,now,ents,logs,openEnt,usr}){
+ const [names,setNames]=useState({}),[dl,setDl]=useState(undefined),[msg,setMsg]=useState(""),[pg,setPg]=useState(()=>lsGet("aud-pg")||"L");
+ const G=GRUPOS.find(x=>x.k===pg)||GRUPOS[0],TT=[1,2,3,4,5].map(i=>G.off+i);
+ const reg=regMap(G,teams),sinEq=rosterOf(G).map(fullName).filter(n=>!reg[norm(n)]);
+ useEffect(()=>{let ok=true;const c=window.claude;if(!c||!c.use){setDl(localDl);return;}c.use("downloads").then(d=>{if(ok)setDl(d||localDl)}).catch(()=>{if(ok)setDl(localDl)});return()=>{ok=false};},[]);
+ const ids=[...new Set(logs.map(l=>l.uid).concat(ents.map(e=>e.uid)).filter(x=>typeof x==="string"&&x))];
+ const idKey=ids.join(",");
+ useEffect(()=>{let ok=true;if(!usr||!usr.profiles||!ids.length)return;usr.profiles(ids).then(ps=>{if(!ok||!ps)return;const o={};ids.forEach(id=>{o[id]=(ps[id]&&ps[id].name)||""});setNames(o);}).catch(()=>{});return()=>{ok=false};},[usr,idKey]);
+ const acct=id=>(id&&names[id])||(id?"Cuenta sin nombre visible":"—");
+ const evn=e=>e==="equipo"?"Entró al equipo":e==="entrega"?"Entregó reporte final":"Abrió la página";
+ const save=async(filename,data,okm)=>{if(!dl)return;try{await dl.save({filename,data});setMsg(okm);}catch(e){setMsg(e&&e.code==="declined"?"Descarga cancelada.":"No se pudo descargar. Inténtalo de nuevo.");}};
+ const csvAcc=()=>"Fecha y hora,Evento,Grupo y equipo,Empresa,Nombre escrito,Cuenta\n"+logs.map(l=>[fmt(l.t),evn(l.ev),l.team?tLab(l.team):"",l.team?empOf(l.team).n:"",l.n,acct(l.uid)].map(csvq).join(",")).join("\n");
+ const jsonEnt=()=>JSON.stringify(ents.slice().sort((a,b)=>(a.team-b.team)||((a.t||0)-(b.t||0))).map(e=>({...e,fecha:fmt(e.t),cuenta:acct(e.uid)})),null,2);
+ const stamp=new Date().toISOString().slice(0,10);
+ const partAll=Array.from({length:NT},(_,i)=>i+1).flatMap(n=>{const a=all[n]||{p:[],r:[]};return partOf(teams[n],a.p,a.r).map(([id,x])=>[n,id,x]);});
+ const part=partAll.filter(([n])=>grpOf(n)===G);
+ const csvPart=()=>"Grupo,Equipo,Empresa,Alumno,Respuestas,Última actividad\n"+partAll.map(([n,,x])=>[grpOf(n).n,loc(n),empOf(n).n,x.n,x.c,x.last?fmt(x.last):""].map(csvq).join(",")).join("\n")
+  +"\n"+GRUPOS.flatMap(g2=>{const r2=regMap(g2,teams);return rosterOf(g2).map(fullName).filter(n=>!r2[norm(n)]).map(n=>[g2.n,"Sin equipo","",n,0,""].map(csvq).join(","));}).join("\n");
+ return h("div",{className:"wrap"},
+  h("div",{className:"bar"},h("div",null,h("span",{className:"chip"},"Panel docente"),h("h1",null,"Avance en vivo")),h("button",{className:"btn alt",onClick:back},"Volver")),
+  h("div",{className:"sub",role:"group","aria-label":"Grupo",style:{marginTop:4}},GRUPOS.map(x=>h("button",{key:x.k,"aria-pressed":pg===x.k,onClick:()=>{setPg(x.k);lsSet("aud-pg",x.k);}},x.n+" · "+Object.keys(regMap(x,teams)).length+"/"+x.lista.length+" registrados"))),
+  h("div",{className:"card tblw",style:{marginTop:16}},h("table",{className:"tbl"},
+   h("thead",null,h("tr",null,h("th",null,"Equipo"),h("th",null,"Empresa"),h("th",null,"Integrantes"),h("th",null,"Porter"),h("th",null,"RSE"),h("th",null,"Evaluado"),h("th",null,"Entrega final"),h("th",null,""))),
+   h("tbody",null,TT.map((n,i)=>{const e=empOf(n),a=all[n]||{p:[],r:[]},pv=PORTER.filter((d,j)=>checks(a.p[j],d,true).val).length,rv=RSE.filter((d,j)=>checks(a.r[j],d,false).val).length,ev=a.r.filter(evalOk).length;
+    return h("tr",{key:n},h("td",null,h("b",null,loc(n))),h("td",null,e.n),h("td",null,members(teams[n]).length?members(teams[n]).map(([id,x])=>{const rl=rolesOf(teams[n],id);return h("div",{key:id},x.n,rl.length?h("span",{className:"mut sm"}," · "+rl.join(", ")):h("span",{className:"pill wait",style:{marginLeft:6}},"sin rol"));}):h("span",{className:"mut"},"—")),
+     h("td",null,h("span",{className:"pill"+(pv===5?" ok":"")},pv+"/5")),h("td",null,h("span",{className:"pill"+(rv===4?" ok":"")},rv+"/4")),h("td",null,ev+"/4"),
+     h("td",null,(()=>{const le=lastOf(ents,n),nv=ents.filter(x=>x.team===n).length;return le?h("div",null,h("span",{className:"pill ok"},"Entregado"),h("div",{className:"mut sm"},fmt(le.t)+(nv>1?" · "+nv+" versiones":"")),h("button",{className:"btn alt sm",style:{marginTop:4},onClick:()=>openEnt(le)},"Ver entrega")):h("span",{className:"pill wait"},"Pendiente");})()),
+     h("td",null,h("button",{className:"btn alt sm",onClick:()=>openTeam(n)},"Avance en vivo")));})))),
+  h("p",{className:"mut sm",style:{marginTop:10}},"Las cifras cuentan fuerzas y áreas validadas. Se actualizan solas. Cada entrega final queda guardada como copia congelada; si el equipo vuelve a entregar, se guarda una versión nueva y se conservan las anteriores."),
+  h("div",{className:"card",style:{marginTop:16}},h("h2",null,"Sin equipo · "+G.n+" ("+sinEq.length+")"),
+   sinEq.length?h("div",{className:"mem"},sinEq.map(n=>h("span",{key:n,style:{paddingRight:12}},n))):h("p",{className:"mut"},"Todos los alumnos de la lista ya eligieron equipo.")),
+  h("div",{className:"card tblw",style:{marginTop:16}},h("div",{className:"bar"},h("h2",{style:{margin:0}},"Participación por alumno · "+G.n),
+    isAdmin&&dl?h("button",{className:"btn alt sm",onClick:()=>save("Participacion_Auditoria_RSE_"+stamp+".csv","\ufeff"+csvPart(),"Participación descargada.")},"Descargar participación (CSV)"):null),
+   h("p",{className:"mut sm"},"Respuestas en las que cada alumno fue el último en escribir, y la hora de su última edición. Se actualiza sola."),
+   h("table",{className:"tbl"},h("thead",null,h("tr",null,h("th",null,"Equipo"),h("th",null,"Alumno"),h("th",null,"Respuestas"),h("th",null,"Última actividad"))),
+    h("tbody",null,part.length?part.map(([n,id,x])=>h("tr",{key:n+id},h("td",null,loc(n)),h("td",null,x.n),h("td",null,x.c?x.c:h("span",{className:"pill wait"},"0")),h("td",null,x.last?fmt(x.last):"Sin actividad"))):h("tr",null,h("td",{colSpan:4,className:"mut"},"Aún no hay alumnos registrados."))))),
+  isAdmin?h("div",{className:"card",style:{marginTop:16}},
+   h("div",{className:"bar"},h("h2",{style:{margin:0}},"Registro de accesos"),
+    dl?h("div",{style:{display:"flex",gap:8,flexWrap:"wrap"}},
+     h("button",{className:"btn alt sm",disabled:!logs.length,onClick:()=>save("Accesos_Auditoria_RSE_"+stamp+".csv","\ufeff"+csvAcc(),"Registro de accesos descargado.")},"Descargar accesos (CSV)"),
+     h("button",{className:"btn alt sm",disabled:!ents.length,onClick:()=>save("Entregas_Auditoria_RSE_"+stamp+".json",jsonEnt(),"Respaldo de entregas descargado.")},"Respaldar entregas (JSON)")):null),
+   h("p",{className:"mut sm"},"Se registra automáticamente quién abre la página, quién entra a cada equipo y quién entrega el reporte final, con la cuenta de Claude de cada persona. Solo tú ves este registro."),
+   msg?h("p",{className:"mut sm",role:"status"},msg):null,
+   logs.length?h("div",{className:"tblw",style:{maxHeight:420,overflowY:"auto"}},h("table",{className:"tbl"},
+    h("thead",null,h("tr",null,h("th",null,"Fecha y hora"),h("th",null,"Evento"),h("th",null,"Equipo"),h("th",null,"Nombre escrito"),h("th",null,"Cuenta"))),
+    h("tbody",null,logs.slice(0,300).map(l=>h("tr",{key:l.id},h("td",{style:{whiteSpace:"nowrap"}},fmt(l.t)),h("td",null,evn(l.ev)),h("td",null,l.team?tLab(l.team):"—"),h("td",null,str(l.n)||"—"),h("td",null,acct(l.uid)))))))
+   :h("p",{className:"mut"},"Todavía no hay accesos registrados.")):null);
+}
+
+/* ---------- Área genérica (fuerza de Porter o área de RSE) ---------- */
+function AreaCard({d,def,isP,id,w,ms,me,demo}){
+ const C=checks(d,def,isP),src=d.src||{};
+ const respName=(ms.find(([k])=>k===d.resp)||[,{}])[1].n;
+ return h("div",{className:"card"},
+  h("div",{className:"bar"},h("div",null,h("span",{className:"folio"},(isP?"Fuerza ":"Área ")+id),h("h2",{style:{margin:0}},def.n)),
+   C.val?h("span",{className:"pill ok"},"✓ Validada"):C.ok?h("span",{className:"pill wait"},"Lista para validar"):h("span",{className:"pill"},C.done+"/"+C.n+" requisitos")),
+  h("div",{className:"g2",style:{marginTop:8}},
+   h("div",{className:"f"},h("label",{htmlFor:"resp"+id},"Responsable"),h("select",{id:"resp"+id,value:str(d.resp),onChange:e=>w(["resp"],e.target.value)},h("option",{value:""},"Elegir integrante…"),ms.map(([k,x])=>h("option",{key:k,value:k},x.n)))),
+   isP?h("div",{className:"f"},h("span",{className:"lbl"},"Intensidad de la fuerza"),h("div",{className:"seg",role:"group","aria-label":"Intensidad"},INT.map(o=>h("button",{key:o,"aria-pressed":d.int===o,style:d.int===o?{background:`var(--${icol(o)})`}:null,onClick:()=>w(["int"],o)},o))),h("p",{className:"hint",style:{marginTop:4}},"Alta = presiona mucho a la empresa y reduce su rentabilidad.")):
+    h("div",{className:"f"},respName&&me&&d.resp===me?h("p",{style:{marginTop:28}},h("span",{className:"pill ok"},"Esta área es tuya")):null)),
+  def.qs.map(([q,ej],j)=>h("div",{className:"q",key:j},h(Txt,{id:"q"+id+j,l:(j+1)+". "+q,v:ans(d,j),on:v=>w(["a","q"+j],v),area:true,min:MINC,ph:ej}),h(Ed,{e:getIn(d,["ed","a_q"+j])}))),
+  h("div",{className:"src"},h("h3",null,"Fuente que respalda sus respuestas"),
+   h("div",{className:"g2"},
+    h(Txt,{id:"aut"+id,l:"Autor u organización",v:src.aut,on:v=>w(["src","aut"],v),ph:"Ej.: Grupo Bimbo"}),
+    h(Txt,{id:"yr"+id,l:"Año",v:src.yr,on:v=>w(["src","yr"],v),ph:"2025"}),
+    h(Txt,{id:"tit"+id,l:"Título del documento",v:src.tit,on:v=>w(["src","tit"],v),ph:"Informe anual integrado 2025"}),
+    h(Txt,{id:"url"+id,l:"Liga (URL)",v:src.url,on:v=>w(["src","url"],v),ph:"https://"})),
+   h("label",{style:{display:"flex",gap:8,alignItems:"center",fontWeight:600,margin:"6px 0"}},h("input",{type:"checkbox",checked:!!src.ind,onChange:e=>w(["src","ind"],e.target.checked)}),"Es una fuente independiente (no publicada por la empresa)"),
+   h("p",{className:"mut sm",style:{margin:0}},h("b",null,"APA 7: "),ref(src)),h(Ed,{e:lastEd(d,"src_")})),
+  h("div",{className:"checks"},C.it.map(([t,o])=>h("div",{className:"ck",key:t},(o?"✅ ":"⬜ ")+t))),
+  h("div",{className:"bar",style:{marginTop:8}},
+   h("span",{className:"mut sm"},C.val?"Validada. Si cambian algo y deja de cumplir, se desvalida sola.":"Cuando todo esté en verde, validen el área."),
+   C.val?h("button",{className:"btn alt sm",onClick:()=>w(["v"],false)},"Quitar validación"):h("button",{className:"btn",disabled:!C.ok||demo,onClick:()=>w(["v"],true)},"Validar "+(isP?"fuerza":"área"))));
+}
+
+/* ---------- Trabajo ---------- */
+function Work({team,meta,P,R,wm,wp,wr,me,setMe,tab,setTab,sub,setSub,peers,live,demo,report,leave,clase,now}){
+ const E=demo?{n:"Panificadora del Caribe (empresa ficticia)",s:"Ejemplo resuelto",links:[]}:empOf(team);
+ const ms=members(meta),pc=PORTER.map((d,i)=>checks(P[i]||{},d,true)),rc=RSE.map((d,i)=>checks(R[i]||{},d,false));
+ const pOk=pc.every(c=>c.val)||demo,rOk=rc.every(c=>c.val)||demo,nEval=R.filter(evalOk).length;
+ const canReport=nEval===4&&str(meta.rel).trim().length>=MINC&&str(meta.concl).trim().length>=MINC;
+ const [nw,setNw]=useState(""),[confirm,setConfirm]=useState(null);
+ const mine=(arr)=>arr.map(d=>me&&d&&d.resp===me);
+ const TABS=[["eq","Equipo",ms.length+" integrantes"],["po","Porter",pc.filter(c=>c.val).length+"/5 validadas"],["rs","RSE",pOk?rc.filter(c=>c.val).length+"/4 validadas":"bloqueada"],["ev","Evaluación",rOk?nEval+"/4":"bloqueada"],["di","Fuentes","directorio"]];
+ const dots=k=>peers.filter(p=>p.tab===k&&!p.me).length;
+ let body;
+ if(tab==="eq"){
+  body=h("div",{className:"stack"},
+   h("details",{className:"card"},h("summary",{style:{cursor:"pointer",fontWeight:800}},"📋 ¿Qué se pide? Ver criterios y ejemplos"),h("div",{style:{marginTop:10}},h(QueSePide))),
+   h("div",{className:"card"},h("h2",null,"Responsabilidades del equipo"),
+    h("p",{className:"mut sm"},"Cada integrante asume al menos una responsabilidad. Si son menos de cinco, alguien puede asumir dos."),
+    !me&&!demo?h("p",{className:"pill wait",style:{whiteSpace:"normal"}},"Primero elige quién eres (en «Integrantes del equipo») para poder asumir una responsabilidad."):null,
+    ROLES.map(r=>{const roles=meta.roles||{},hid=str(roles[r.k]),hn=hid?((ms.find(([k])=>k===hid)||[,{}])[1].n||""):"",mine=!!hn&&hid===me;
+     return h("div",{className:"row",key:r.k},h("div",{style:{minWidth:0}},h("b",null,r.i+" "+r.n),h("div",{className:"mut sm"},r.d)),
+      h("div",{style:{display:"flex",gap:8,alignItems:"center",flexWrap:"wrap",justifyContent:"flex-end"}},
+       hn?h("span",{className:"pill ok"},hn+(mine?" (tú)":"")):h("span",{className:"pill wait"},"Libre"),
+       mine?h("button",{className:"btn alt sm",onClick:()=>wm(["roles",r.k],"")},"Soltar"):!hn&&me&&!demo?h("button",{className:"btn sm",onClick:()=>wm(["roles",r.k],me)},"Asumir"):null));}),
+    (()=>{const sin=ms.filter(([id])=>!rolesOf(meta,id).length).map(([,x])=>x.n);return sin.length&&!demo?h("p",{className:"mut sm",style:{marginTop:8}},"Sin responsabilidad todavía: "+sin.join(", ")+"."):null;})()),
+   h("div",{className:"card"},h("h2",null,"Integrantes del equipo"),
+    ms.length?h("div",{className:"mem"},ms.map(([id,x])=>h("span",{key:id},x.n+(id===me?" (tú)":""),confirm===id?h("button",{"aria-label":"Confirmar quitar a "+x.n,onClick:()=>{wm(["mem",id,"del"],true);setConfirm(null);if(id===me)setMe("");},style:{color:"var(--r)",fontSize:".8rem",width:"auto",padding:"0 8px"}},"¿Quitar?"):h("button",{"aria-label":"Quitar a "+x.n,onClick:()=>setConfirm(id)},"×")))):h("p",{className:"mut"},"Aún no hay integrantes."),
+    h("div",{className:"bar",style:{alignItems:"flex-end",justifyContent:"flex-start"}},
+     h("div",{style:{flex:"1 1 240px"}},h(Txt,{id:"addm",l:"Agregar integrante",v:nw,on:setNw,ph:"Nombre y apellido"})),
+     h("button",{className:"btn alt",style:{marginBottom:10},disabled:nw.trim().length<3,onClick:()=>{const id="m"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);wm(["mem",id],{n:nw.trim(),t:Date.now()});setNw("");}},"Agregar")),
+    h("div",{className:"f",style:{maxWidth:360}},h("label",{htmlFor:"yo"},"¿Quién eres en este dispositivo?"),h("select",{id:"yo",value:me,onChange:e=>setMe(e.target.value)},h("option",{value:""},"Elegir…"),ms.map(([k,x])=>h("option",{key:k,value:k},x.n))))),
+   live&&!demo?h("div",{className:"card tblw"},h("h2",null,"Participación del equipo"),
+    h("p",{className:"mut sm"},"Cuenta las respuestas en las que cada integrante fue el último en escribir. Para que tu trabajo cuente, elige quién eres en este dispositivo."),
+    (()=>{const pt=partOf(meta,P,R);return pt.length?h("table",{className:"tbl"},h("thead",null,h("tr",null,h("th",null,"Integrante"),h("th",null,"Respuestas"),h("th",null,"Última actividad"))),
+     h("tbody",null,pt.map(([id,x])=>h("tr",{key:id},h("td",null,x.n+(id===me?" (tú)":"")),h("td",null,x.c),h("td",null,x.last?ago(x.last):"Sin actividad"))))):h("p",{className:"mut"},"Aún no hay actividad.");})()):null,
+   h("div",{className:"card tblw"},h("h2",null,"Reparto de tareas por fuerza y área"),
+    h("p",{className:"mut sm"},"Cada integrante puede ver y editar todo, pero el responsable asegura que su parte quede validada."),
+    h("table",{className:"tbl"},h("thead",null,h("tr",null,h("th",null,"Fase"),h("th",null,"Tarea"),h("th",null,"Responsable"),h("th",null,"Estado"))),
+     h("tbody",null,PORTER.map((d,i)=>h("tr",{key:"p"+i},h("td",null,"Porter"),h("td",null,d.n),h("td",null,h("select",{"aria-label":"Responsable de "+d.n,value:str((P[i]||{}).resp),onChange:e=>wp(i,["resp"],e.target.value)},h("option",{value:""},"Sin asignar"),ms.map(([k,x])=>h("option",{key:k,value:k},x.n)))),h("td",null,pc[i].val?h("span",{className:"pill ok"},"Validada"):h("span",{className:"pill"},pc[i].done+"/"+pc[i].n)))).concat(
+      RSE.map((d,i)=>h("tr",{key:"r"+i},h("td",null,"RSE"),h("td",null,d.n),h("td",null,h("select",{"aria-label":"Responsable de "+d.n,value:str((R[i]||{}).resp),onChange:e=>wr(i,["resp"],e.target.value)},h("option",{value:""},"Sin asignar"),ms.map(([k,x])=>h("option",{key:k,value:k},x.n)))),h("td",null,rc[i].val?h("span",{className:"pill ok"},"Validada"):h("span",{className:"pill"},rc[i].done+"/"+rc[i].n)))))))));
+ }else if(tab==="po"){
+  const i=Math.min(sub.po,4),mn=mine(P);
+  body=h("div",null,
+   h("div",{className:"card",style:{marginBottom:12}},h("h2",null,"Fase 1 · Las 5 fuerzas de Porter"),h("p",{className:"mut"},"¿Qué tan atractiva es la industria donde compite "+E.n+"? Cada fuerza se analiza con datos, se califica su intensidad y se valida con una fuente."),
+    h("div",{className:"sub",style:{marginTop:10,marginBottom:0}},PORTER.map((d,j)=>h("button",{key:j,className:mn[j]?"mine":"","aria-pressed":i===j,onClick:()=>setSub({...sub,po:j})},(pc[j].val?"✓ ":"")+d.s+(mn[j]?" (tuya)":""))))),
+   h(AreaCard,{key:"p"+i,d:P[i]||{},def:PORTER[i],isP:true,id:"P"+(i+1),w:(p,v)=>wp(i,p,v),ms,me,demo}),
+   pOk&&!demo&&h("div",{className:"card",style:{marginTop:12}},h("h2",null,"¡Porter validado!"),h("p",null,"La auditoría de RSE ya está abierta."),h("button",{className:"btn",onClick:()=>setTab("rs")},"Ir a RSE")));
+ }else if(tab==="rs"){
+  if(!pOk)body=h("div",{className:"lock"},h("h2",null,"La auditoría de RSE se abre al validar las 5 fuerzas"),h("p",{className:"mut"},"Pendientes: "+PORTER.filter((_,j)=>!pc[j].val).map(d=>d.s).join(", ")+"."),h("button",{className:"btn",style:{marginTop:10},onClick:()=>setTab("po")},"Ir a Porter"));
+  else{const i=Math.min(sub.rs,3),mn=mine(R);
+   body=h("div",null,
+    h("div",{className:"card",style:{marginBottom:12}},h("h2",null,"Fase 2 · Auditoría de responsabilidad social"),h("p",{className:"mut"},"Busquen evidencia de lo que la empresa dice y contrástenla con lo que dicen otros. Marquen si su fuente es independiente."),
+     h("div",{className:"sub",style:{marginTop:10,marginBottom:0}},RSE.map((d,j)=>h("button",{key:j,className:mn[j]?"mine":"","aria-pressed":i===j,onClick:()=>setSub({...sub,rs:j})},(rc[j].val?"✓ ":"")+d.n+(mn[j]?" (tuya)":""))))),
+    h(AreaCard,{key:"r"+i,d:R[i]||{},def:RSE[i],isP:false,id:"R"+(i+1),w:(p,v)=>wr(i,p,v),ms,me,demo}));}
+ }else if(tab==="ev"){
+  if(!rOk)body=h("div",{className:"lock"},h("h2",null,"La evaluación se abre al validar las 4 áreas de RSE"),h("p",{className:"mut"},pOk?"Pendientes: "+RSE.filter((_,j)=>!rc[j].val).map(d=>d.n).join(", ")+".":"Primero validen las 5 fuerzas de Porter."),h("button",{className:"btn",style:{marginTop:10},onClick:()=>setTab(pOk?"rs":"po")},pOk?"Ir a RSE":"Ir a Porter"));
+  else{const at=attr(P);
+   body=h("div",{className:"stack"},
+    h("div",{className:"card"},h("h2",null,"Fase 3 · Evaluación"),h("p",{className:"mut"},"Califiquen cada área del 1 al 10 con base en la evidencia que encontraron, no en la intuición."),
+     h(PorterMap,{p:P}),at&&h("p",{style:{textAlign:"center"}},"Atractivo de la industria: ",h("b",null,at))),
+    RSE.map((def,i)=>{const d=R[i]||{},s=scoreOf(d),rw=(p,v)=>wr(i,p,v);
+     return h("div",{className:"card",key:i},h("span",{className:"folio"},"Área R"+(i+1)),h("h2",null,def.n),
+      h("p",{className:"mut sm"},"1 = muy deficiente · 10 = ejemplar"),
+      h("div",{className:"scale"},[1,2,3,4,5,6,7,8,9,10].map(n=>h("button",{key:n,className:"sc","aria-pressed":s===n,"aria-label":"Calificar "+n,style:s===n?{background:`var(--${col(n)})`}:null,onClick:()=>rw(["s"],n)},n))),
+      s!==null&&h("p",null,h("b",null,s+"/10"),": "+lab(s)),
+      h(Ed,{e:getIn(d,["ed","s"])}),
+      h(Txt,{id:"just"+i,l:"Justificación con evidencia",hint:"Mencionen un dato y su fuente (Autor, año).",v:d.just,on:v=>rw(["just"],v),area:true,min:40}),h(Ed,{e:getIn(d,["ed","just"])}),
+      h(Txt,{id:"rec"+i,l:"Recomendación concreta a la empresa",v:d.rec,on:v=>rw(["rec"],v),area:true,ph:"Qué debería hacer, cómo medirlo y en qué plazo"}),h(Ed,{e:getIn(d,["ed","rec"])}));}),
+    h("div",{className:"card"},
+     h(Txt,{id:"rel",l:"Porter + RSE: ¿cómo se relacionan?",hint:"¿Las fuerzas competitivas empujan a la empresa a ser más (o menos) responsable? ¿Su RSE le da ventaja competitiva?",v:meta.rel,on:v=>wm(["rel"],v),area:true,min:MINC}),h(Ed,{e:getIn(meta,["ed","rel"])}),
+     h(Txt,{id:"concl",l:"Dictamen del equipo auditor",hint:"¿Qué tan socialmente responsable es la empresa y qué evidencia lo demuestra?",v:meta.concl,on:v=>wm(["concl"],v),area:true,min:MINC}),h(Ed,{e:getIn(meta,["ed","concl"])}),
+     h("div",{className:"bar",style:{marginTop:12}},h("span",{className:"mut"},nEval+" de 4 áreas evaluadas"),h("button",{className:"btn",disabled:!canReport,onClick:report},"Generar reporte final")),
+     !canReport&&h("p",{className:"mut sm"},"Para el reporte: las 4 áreas con calificación y justificación, la relación Porter + RSE y el dictamen.")));}
+ }else body=h(Directory,{team:demo?0:team});
+ const here=peers.filter(p=>!p.me);
+ return h("div",{className:"wrap"},
+  h("div",{className:"bar"},
+   h("div",{style:{minWidth:0}},h("span",{className:"chip"},demo?"Ejemplo resuelto":tLab(team)),
+    h("span",{className:"mut sm",style:{marginLeft:10,fontWeight:600}},demo?"Empresa ficticia; no se guarda":live?"🟢 En vivo"+(here.length?" · conectados: "+here.map(p=>p.who||"alguien").join(", "):""):"⚪ Solo en esta pantalla"),
+    h("h2",{style:{marginTop:8,overflowWrap:"anywhere"}},E.n),h("p",{className:"mut sm"},E.s+(me&&!demo?" · Tú: "+((ms.find(([k])=>k===me)||[,{}])[1].n||"")+(rolesOf(meta,me).length?" · "+rolesOf(meta,me).join(" y "):""):""))),
+   h("div",{style:{display:"flex",gap:8,flexWrap:"wrap",alignItems:"center"}},h(Clock,{clase,now}),h("button",{className:"btn alt sm",disabled:!canReport,onClick:report},"Ver reporte"),h("button",{className:"btn alt sm",onClick:leave},"Cambiar equipo"))),
+  !demo&&live&&!me&&h("p",{className:"pill wait",style:{whiteSpace:"normal"}},"Elige quién eres en la pestaña Equipo para ver tus tareas marcadas."),
+  !demo&&live&&me&&!rolesOf(meta,me).length&&h("p",{className:"pill wait",style:{whiteSpace:"normal"}},"Aún no asumes una responsabilidad. Elige una en la pestaña Equipo."),
+  !demo?(()=>{const items=[["5 fuerzas de Porter validadas",pc.filter(c=>c.val).length,5],["4 áreas de RSE validadas",rc.filter(c=>c.val).length,4],["4 áreas evaluadas",nEval,4],["Relación Porter + RSE",str(meta.rel).trim().length>=MINC?1:0,1],["Dictamen del equipo",str(meta.concl).trim().length>=MINC?1:0,1]];
+   return h("div",{className:"card",style:{marginTop:12,padding:14}},h("div",{className:"bar"},h("b",null,canReport?"✅ Su reporte está listo para descargar":"Avance hacia «Mi reporte»"),h("button",{className:"btn",disabled:!canReport,onClick:report},"📄 Mi reporte")),
+    canReport?null:h("div",{className:"sm",style:{display:"flex",gap:"4px 14px",flexWrap:"wrap",marginTop:6}},items.map(([t,a,b])=>h("span",{key:t,style:{color:a>=b?"var(--g)":"var(--mut)",fontWeight:600}},(a>=b?"✓ ":"○ ")+t+(b>1?" ("+a+"/"+b+")":"")))));})():null,
+  h("div",{className:"tabs",role:"tablist"},TABS.map(([k,a,b])=>{const d=dots(k);return h("button",{key:k,role:"tab",className:"tab","aria-selected":tab===k,onClick:()=>{setTab(k);window.scrollTo(0,0);}},
+   d?h("span",{className:"dots","aria-label":d+" compañeros aquí"},Array.from({length:Math.min(d,4)},(_,j)=>h("i",{key:j}))):null,a,h("small",null,b));})),
+  body);
+}
+
+/* ---------- Reporte ---------- */
+function Report({team,meta,P,R,grade,isAdmin,wGrade,back,leave,demo,ent,submit,snapT,snapBy,live,yo}){
+ const [big,setBig]=useState(false),[copied,setCopied]=useState(false),[conf,setConf]=useState(false),[sMsg,setSMsg]=useState(""),[sBusy,setSBusy]=useState(false);
+ const doSubmit=async()=>{if(sBusy)return;setSBusy(true);setSMsg("");try{await submit();setConf(false);setSMsg("Reporte final entregado y guardado.");}catch(e){setSMsg("No se pudo guardar la entrega. Revisa tu conexión e inténtalo de nuevo.");}setSBusy(false);};
+ const E=demo?{n:"Panificadora del Caribe (empresa ficticia)",s:"Ejemplo resuelto"}:empOf(team);
+ const sc=R.map(d=>scoreOf(d)||0),g=avg(sc),gr=Math.round(g*10)/10,c=col(g),at=attr(P);
+ const srcs=P.concat(R).map(d=>d&&d.src).filter(srcOk);
+ const nInd=srcs.filter(s=>s.ind).length;
+ const refs=[...new Set(srcs.map(ref))].sort((a,b)=>a.localeCompare(b,"es"));
+ const ms=members(meta),nm=id=>(ms.find(([k])=>k===id)||[,{}])[1].n;
+ const copy=()=>{try{navigator.clipboard.writeText(refs.join("\n")).then(()=>setCopied(true),()=>{})}catch(e){}};
+ const rub=str(grade.rub);
+ const box=useRef(null),[dl,setDl]=useState(undefined),[msg,setMsg]=useState(""),[busy,setBusy]=useState(false);
+ useEffect(()=>{let ok=true;const c=window.claude;if(!c||!c.use){setDl(localDl);return;}c.use("downloads").then(d=>{if(ok)setDl(d||localDl)}).catch(()=>{if(ok)setDl(localDl)});return()=>{ok=false};},[]);
+ const fname=(demo?"Ejemplo":grpOf(team).n.slice(0,4)+"_Equipo"+loc(team)+"_"+E.n.split(" (")[0].replace(/\s+/g,"_"))+"_Auditoria_RSE"+(snapT?"_entrega_"+new Date(snapT).toISOString().slice(0,10):"")+(yo&&!snapT&&!demo?"_"+norm(yo).replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,""):"");
+ const errMsg=e=>{const c=e&&e.code;return c==="declined"?"Descarga cancelada.":c==="rate_limited"?"Ya hay una descarga en espera; inténtalo en unos segundos.":c==="unavailable"||c==="not_granted"?"La descarga no está disponible en esta vista.":"No se pudo descargar. Inténtalo de nuevo.";};
+ const withLight=async fn=>{const root=document.documentElement,prev=root.getAttribute("data-theme"),pb=big;root.setAttribute("data-theme","light");if(pb)setBig(false);await new Promise(r=>setTimeout(r,120));
+  try{return await fn();}finally{if(prev===null)root.removeAttribute("data-theme");else root.setAttribute("data-theme",prev);if(pb)setBig(true);}};
+ const savePdf=async()=>{if(!dl||busy)return;setBusy(true);setMsg("Preparando el PDF…");
+  try{
+   if(!window.html2canvas||!window.jspdf)throw {code:"x"};
+   const buf=await withLight(async()=>{
+    box.current.classList.add("capturing");
+    try{
+    const bt=box.current.getBoundingClientRect().top,bh=box.current.offsetHeight;
+    const cuts=[...box.current.querySelectorAll(".card,.ans,.row,.ref,.rep,h3")].map(el=>{const r=el.getBoundingClientRect();return [r.top-bt-4,r.bottom-bt+4];}).flat();
+    const cv=await window.html2canvas(box.current,{scale:2,backgroundColor:"#ffffff",useCORS:true});
+    const pdf=new window.jspdf.jsPDF({unit:"mm",format:"letter",orientation:"portrait"});
+    const pw=pdf.internal.pageSize.getWidth(),ph=pdf.internal.pageSize.getHeight(),m=10,iw=pw-2*m,ih=ph-2*m;
+    const pxPerPage=Math.floor(cv.width*ih/iw);let y=0,pg=0;
+    const k=cv.height/bh,cp=cuts.map(v=>Math.round(v*k)).sort((x,z)=>x-z);
+    while(y<cv.height){let hgt=Math.min(pxPerPage,cv.height-y);if(y+hgt<cv.height){const best=cp.filter(v=>v>y+pxPerPage*0.55&&v<=y+pxPerPage).pop();if(best)hgt=best-y;}const s=document.createElement("canvas");s.width=cv.width;s.height=hgt;
+     const ctx=s.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,s.width,s.height);ctx.drawImage(cv,0,y,cv.width,hgt,0,0,cv.width,hgt);
+     if(pg)pdf.addPage();pdf.addImage(s.toDataURL("image/jpeg",0.92),"JPEG",m,m,iw,hgt*iw/cv.width);y+=hgt;pg++;}
+    return pdf.output("arraybuffer");}finally{box.current&&box.current.classList.remove("capturing");}});
+   await dl.save({filename:fname+".pdf",data:buf});setMsg("PDF descargado.");
+  }catch(e){setMsg(e&&e.code==="x"?"No se cargó el generador de PDF. Usa la descarga en HTML.":errMsg(e));}
+  setBusy(false);};
+ const saveHtml=async()=>{if(!dl||busy)return;setBusy(true);
+  try{const html=await withLight(async()=>{const cl=box.current.cloneNode(true);cl.querySelectorAll(".noprint").forEach(n=>n.remove());cl.className="wrap";
+    const css=[...document.querySelectorAll("style")].map(s=>s.textContent).join("\n");
+    return "<!doctype html><html lang=\"es\" data-theme=\"light\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>"+fname.replace(/_/g," ")+"</title><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500&display=swap\"><style>"+css+"</style></head><body><div class=\"stripe\"></div>"+cl.outerHTML+"</body></html>";});
+   await dl.save({filename:fname+".html",data:html});setMsg("Reporte descargado.");
+  }catch(e){setMsg(errMsg(e));}
+  setBusy(false);};
+ return h("div",{className:"wrap"+(big?" proj":""),ref:box},
+  h("div",{className:"bar noprint"},h("button",{className:"btn alt",onClick:back},"Volver"),
+   h("div",{style:{display:"flex",gap:8,flexWrap:"wrap"}},
+    dl?h("button",{className:"btn",disabled:busy,onClick:savePdf},busy?"Generando…":"Descargar PDF para Brightspace"):null,
+    dl?h("button",{className:"btn alt",disabled:busy,onClick:saveHtml},"Descargar HTML"):null,
+    h("button",{className:"btn alt",onClick:()=>setBig(!big)},big?"Modo normal":"Modo proyección"),h("button",{className:"btn alt",onClick:leave},"Cambiar equipo"))),
+  msg?h("p",{className:"noprint mut sm",role:"status",style:{textAlign:"right",marginTop:6}},msg):null,
+  dl===null?h("p",{className:"noprint mut sm",style:{textAlign:"right",marginTop:6}},"La descarga no está disponible en esta vista."):null,
+  snapT?h("div",{className:"call ok noprint"},h("h3",null,"📦 Versión entregada"),h("p",null,"Entregada el "+fmt(snapT)+(snapBy?" por "+snapBy:"")+". Es una copia congelada: lo que el equipo cambie después no la modifica.")):null,
+  !demo&&!snapT&&live?h("div",{className:"call "+(ent?"ok":"must")+" noprint"},
+   h("h3",null,ent?"✅ Reporte final entregado":"📤 Entrega final del equipo"),
+   h("p",null,ent?"Último envío: "+fmt(ent.t)+(str(ent.n)?" por "+ent.n:"")+". Si corrigen algo, pueden volver a entregar; se guarda como versión nueva.":"Cuando el equipo termine, una sola persona entrega el reporte. Se guarda una copia congelada que la docente revisa y califica."),
+   conf?h("div",{style:{display:"flex",gap:8,flexWrap:"wrap",marginTop:8}},h("button",{className:"btn",disabled:sBusy,onClick:doSubmit},sBusy?"Guardando…":"Sí, entregar ahora"),h("button",{className:"btn alt",disabled:sBusy,onClick:()=>setConf(false)},"Cancelar"))
+    :h("button",{className:"btn",style:{marginTop:8},onClick:()=>setConf(true)},ent?"Entregar de nuevo":"Entregar reporte final"),
+   sMsg?h("p",{className:"sm",role:"status",style:{marginTop:6}},sMsg):null):null,
+  demo||snapT?null:h("div",{className:"noprint"},h(SubirBS,{fname,btn:dl?h("button",{className:"btn",style:{marginTop:8},disabled:busy,onClick:savePdf},busy?"Generando…":"⬇️ Descargar PDF para Brightspace"):null})),
+  h("div",{style:{marginTop:16}},h("span",{className:"chip"},(demo?"Ejemplo":tLab(team))+" · Dictamen de auditoría de RSE")),
+  h("h1",null,E.n),h("p",{className:"mut"},E.s),
+  yo&&!snapT&&!demo?h("p",null,h("b",null,"Entrega individual de: "),yo+" · "+grpOf(team).n+" · Equipo "+loc(team)+" · "+fmt(Date.now()).split(",")[0]):null,
+  ms.length?h("div",{className:"card",style:{marginTop:12}},h("h2",null,"Integrantes y responsabilidades"),
+   h("div",{className:"tblw"},h("table",{className:"tbl"},h("thead",null,h("tr",null,h("th",null,"Integrante"),h("th",null,"Responsabilidad"),h("th",null,"Respuestas aportadas"))),
+    h("tbody",null,(()=>{const pt=Object.fromEntries(partOf(meta,P,R));return ms.map(([id,x])=>h("tr",{key:id},h("td",null,x.n),h("td",null,rolesOf(meta,id).join(", ")||"Sin asignar"),h("td",null,(pt[id]&&pt[id].c)||0)));})())))):null,
+  h("div",{className:"rep"},
+   h("div",{className:"card"},h("h2",null,"Entorno competitivo (Porter)"),h(PorterMap,{p:P}),h("p",{style:{textAlign:"center"}},"Atractivo de la industria: ",h("b",null,at||"Sin dato"))),
+   h("div",{className:"card"},h("h2",null,"Desempeño en RSE"),h(Radar,{vals:sc}),
+    h("div",{style:{display:"flex",alignItems:"center",gap:16,justifyContent:"center",flexWrap:"wrap"}},h("div",{className:"big",style:{color:`var(--${c})`}},gr),
+     h("div",null,h("b",null,"Índice RSE: "+Math.round(g*10)+"/100"),h("p",{className:"mut"},"Cumplimiento "+nivel(g)+" · "+lab(g)),h(Sem,{n:g}))))),
+  h("div",{className:"card",style:{marginTop:16}},h("h2",null,"Semáforo por área"),
+   RSE.map((r,i)=>h("div",{className:"row",key:i},h("div",{style:{minWidth:0}},h("b",null,r.n),h("div",{className:"mut sm"},lab(sc[i])+(str(R[i].rec)?" · Recomendación: "+R[i].rec:""))),h("div",{style:{display:"flex",alignItems:"center",gap:10}},h("b",{style:{fontSize:"1.4em"}},sc[i]),h(Sem,{n:sc[i]})))),
+   h("p",{className:"mut sm",style:{marginTop:8}},srcs.length+" fuentes, "+nInd+" independientes. Confiabilidad del análisis: "+(nInd>=3?"ALTA":nInd>=1?"MEDIA":"BAJA (todas las fuentes son de la empresa)")+".")),
+  str(meta.rel)&&h("div",{className:"card",style:{marginTop:16}},h("h2",null,"Porter + RSE"),h("p",null,meta.rel)),
+  str(meta.concl)&&h("div",{className:"card",style:{marginTop:16}},h("h2",null,"Dictamen del equipo auditor"),h("p",null,meta.concl)),
+  h("div",{className:"card",style:{marginTop:16}},h("h2",null,"Hallazgos: 5 fuerzas"),
+   PORTER.map((d,i)=>{const x=P[i]||{};return h("div",{key:i,style:{marginTop:12,paddingTop:10,borderTop:"1px solid var(--line)"}},h("h3",null,d.n+" · intensidad "+(str(x.int)||"sin dato").toLowerCase()+(nm(x.resp)?" · "+nm(x.resp):"")),d.qs.map(([q],j)=>h("div",{className:"ans",key:j},h("b",null,q),ans(x,j)||"Sin respuesta")));})),
+  h("div",{className:"card",style:{marginTop:16}},h("h2",null,"Hallazgos: RSE"),
+   RSE.map((d,i)=>{const x=R[i]||{};return h("div",{key:i,style:{marginTop:12,paddingTop:10,borderTop:"1px solid var(--line)"}},h("h3",null,d.n+" ("+sc[i]+"/10)"+(nm(x.resp)?" · "+nm(x.resp):"")),d.qs.map(([q],j)=>h("div",{className:"ans",key:j},h("b",null,q),ans(x,j)||"Sin respuesta")),str(x.just)&&h("div",{className:"ans"},h("b",null,"Justificación"),x.just));})),
+  h("div",{className:"card",style:{marginTop:16}},h("div",{className:"bar"},h("h2",{style:{margin:0}},"Referencias APA 7"),refs.length?h("button",{className:"btn alt sm noprint",onClick:copy},copied?"Copiadas":"Copiar referencias"):null),
+   refs.length?refs.map((r,i)=>h("p",{className:"ref",key:i},r)):h("p",{className:"mut"},"Aún no hay fuentes completas.")),
+  h("div",{className:"card",style:{marginTop:16}},h("h2",null,"Calificación docente"),
+   isAdmin&&!demo?h("div",{className:"g2"},h(Txt,{id:"rub",l:"Calificación (0 a 100)",v:grade.rub,on:v=>wGrade(["rub"],v)}),h(Txt,{id:"com",l:"Comentario para el equipo",v:grade.com,on:v=>wGrade(["com"],v),area:true})):null,
+   rub?h("div",{style:{display:"flex",alignItems:"center",gap:16,marginTop:8}},h("div",{className:"big"},rub),h("div",null,h("b",null,"sobre 100"),h("p",{className:"mut"},+rub>=90?"EXCELENTE":+rub>=70?"SATISFACTORIO":"EN DESARROLLO"))):(!isAdmin||demo)&&h("p",{className:"mut"},"Pendiente. Solo la docente puede asignarla."),
+   str(grade.com)&&!isAdmin?h("p",{style:{marginTop:8}},grade.com):null));
+}
+
+/* ---------- Ejemplo resuelto (empresa ficticia, solo local) ---------- */
+const xs=(aut,tit,ind)=>({aut,yr:"2025",tit,url:"https://ejemplo.org/"+tit.toLowerCase().replace(/\W+/g,"-"),ind});
+const DMETA={mem:{a:{n:"Ana López",t:1},b:{n:"Luis Pérez",t:2},c:{n:"Sofía Cruz",t:3},d:{n:"Diego Ruiz",t:4}},roles:{coord:"a",porter:"b",rse:"c",fuentes:"d",dictamen:"a"},
+ rel:"La rivalidad alta y el poder de los clientes obligan a la panificadora a diferenciarse; su programa de compras a productores locales y la reducción de azúcar le dan reputación y lealtad, por lo que la RSE funciona como ventaja competitiva y no solo como gasto.",
+ concl:"Dictamen: la empresa tiene un desempeño de RSE en desarrollo (7/10). Destaca en gobernanza y trato a proveedores locales; su principal riesgo es ambiental, por falta de metas de emisiones medibles y verificadas."};
+const DP=[
+ {resp:"a",int:"Alta",v:true,a:{q0:"Compite con dos grandes panificadoras nacionales y con panaderías locales; según la cámara del sector tiene cerca del 12 % del mercado regional.",q1:"Compiten por precio y cobertura de tiendas; el mercado de pan empacado crece poco (2 % anual), así que ganar clientes implica quitárselos a otro."},src:xs("Cámara Regional de la Industria Panificadora","Estudio de mercado del pan 2025",true)},
+ {resp:"b",int:"Baja",v:true,a:{q0:"Se requiere una planta con hornos industriales, permisos sanitarios y una red de distribución a tiendas, lo que implica una inversión alta para entrar.",q1:"En 2024 entró una marca de pan artesanal, pero solo vende en cafeterías de la zona hotelera y no tiene distribución masiva."},src:xs("Panificadora del Caribe","Informe anual 2025",false)},
+ {resp:"c",int:"Media",v:true,a:{q0:"Sus insumos clave son harina de trigo, azúcar y empaque plástico; la harina la compran a tres molinos grandes, lo que les da poder de negociación.",q1:"Puede cambiar de proveedor de empaque fácilmente, pero no de harina por la calidad requerida; firmó contratos anuales para fijar precios."},src:xs("Panificadora del Caribe","Informe anual 2025",false)},
+ {resp:"d",int:"Alta",v:true,a:{q0:"El 60 % de sus ventas va a dos cadenas de autoservicio que concentran el canal y negocian descuentos y espacio en anaquel.",q1:"El consumidor cambia de marca sin costo y compara precios en tienda, por lo que la empresa no puede subir precios sin perder ventas."},src:xs("Diario Económico del Sureste","Las cadenas presionan a los panificadores locales",true)},
+ {resp:"a",int:"Media",v:true,a:{q0:"La tortilla, las galletas y los cereales cubren la misma necesidad de desayuno o colación rápida y están en las mismas tiendas.",q1:"La tendencia hacia productos saludables favorece a sustitutos integrales y sin azúcar añadida, que crecen más rápido que el pan dulce."},src:xs("Instituto de Estudios del Consumidor","Tendencias de consumo saludable 2025",true)}];
+const DR=[
+ {resp:"b",v:true,s:5,just:"Recicla el 70 % de sus residuos (Panificadora del Caribe, 2025), pero no reporta emisiones ni tiene metas verificadas.",rec:"Medir su huella de carbono en 2026 y fijar una meta de reducción verificada por un tercero.",a:{q0:"Reporta que el 30 % de la energía de su planta es solar y que redujo 8 % su consumo de agua por kilo de pan frente a 2023.",q1:"Recicla el 70 % de sus residuos de planta, pero su empaque es plástico de un solo uso sin programa de acopio después del consumo.",q2:"Una ONG ambiental local la señaló por el plástico que llega a las playas; no encontramos multas de la autoridad ambiental."},src:xs("Red Ambiental Quintana Roo","Plásticos de un solo uso en el Caribe mexicano",true)},
+ {resp:"c",v:true,s:7,just:"Capacita a todo su personal y apoya a escuelas (Panificadora del Caribe, 2025); falta medir el impacto de sus programas.",rec:"Publicar indicadores de impacto de sus programas comunitarios cada año.",a:{q0:"Emplea a 850 personas; reporta 24 horas de capacitación por colaborador al año y una tasa de accidentes a la baja.",q1:"Dona pan a 40 escuelas y comedores comunitarios de Cancún, pero solo reporta cuánto dona, no el impacto en las comunidades.",q2:"Redujo 15 % el azúcar en su pan dulce en 2024 e incluye los sellos de advertencia; no tiene quejas relevantes en PROFECO."},src:xs("Panificadora del Caribe","Informe anual 2025",false)},
+ {resp:"d",v:true,s:8,just:"Tiene código de ética y línea de denuncia operada por un tercero (Panificadora del Caribe, 2025), y su informe sigue los estándares GRI.",rec:"Obtener verificación externa de su informe a partir de 2026.",a:{q0:"Es una empresa familiar con consejo de 7 miembros, 2 de ellos independientes; no cotiza en bolsa, pero publica un informe anual.",q1:"Publica su código de ética y tiene una línea de denuncia anónima operada por un despacho externo; reporta 12 denuncias atendidas en 2024.",q2:"Su informe sigue los estándares GRI, pero no tiene verificación externa; obtuvo el Distintivo ESR por tercer año consecutivo."},src:xs("Centro de Estudios de Responsabilidad Empresarial","Directorio de empresas con distintivo 2025",true)},
+ {resp:"a",v:true,s:8,just:"El 45 % de sus compras es a proveedores locales (Panificadora del Caribe, 2025) y sus ventas crecieron 6 %.",rec:"Reducir el plazo de pago a pequeños proveedores de 60 a 30 días.",a:{q0:"Vendió 1,200 millones de pesos en 2024, 6 % más que el año anterior, y abrió 50 empleos nuevos en distribución.",q1:"El 45 % de sus compras es a proveedores de la península; paga a 60 días, lo que afecta a los productores pequeños.",q2:"Frente a la rivalidad alta, usa su compra local y la reducción de azúcar como argumento de marca para diferenciarse de las grandes panificadoras."},src:xs("Panificadora del Caribe","Informe anual 2025",false)}];
+
+/* ---------- App ---------- */
+function App(){
+ const [db,setDb]=useState(null),[room,setRoom]=useState(null),[isAdmin,setAdmin]=useState(false);
+ const [view,setView]=useState("start"),[team,setTeam]=useState(0),[tab,setTab]=useState("eq"),[sub,setSub]=useState({po:0,rs:0}),[demo,setDemo]=useState(false),[me,setMeS]=useState("");
+ const [docs,setDocs]=useState({}),[teams,setTeams]=useState({}),[all,setAll]=useState({}),[peersRaw,setPeers]=useState([]),[clase,setClaseS]=useState(null),[now,setNow]=useState(Date.now());
+ const [usr,setUsr]=useState(null),[ents,setEnts]=useState([]),[logs,setLogs]=useState([]),[snap,setSnap]=useState(null);
+ const docsRef=useRef(docs);docsRef.current=docs;
+ const logged=useRef({});
+ const myId=async()=>{try{return usr&&usr.id?((await usr.id())||""):""}catch(e){return ""}};
+ const logAcc=async(ev,t,nombre)=>{if(!db)return;const k=ev+"|"+t+"|"+nombre;if(logged.current[k])return;logged.current[k]=1;
+  const uid=await myId();try{await db.collection("accesos").doc("a"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)).set({ev,team:t||0,n:nombre||"",uid,t:Date.now()});}catch(e){}};
+ const pend=useRef(new Map()),timers=useRef({});
+ useEffect(()=>{const t=setInterval(()=>setNow(Date.now()),1000);return()=>clearInterval(t);},[]);
+ useEffect(()=>{let ok=true;const c=window.claude;if(!c||!c.use)return;
+  c.use("db").then(d=>{if(ok&&d)setDb(d)}).catch(()=>{});
+  c.use("room").then(r=>{if(ok&&r)setRoom(r)}).catch(()=>{});
+  c.use("user").then(u=>{if(!ok||!u)return;setUsr(u);if(u.canEdit)u.canEdit().then(v=>{if(ok)setAdmin(!!v)}).catch(()=>{})}).catch(()=>{});
+  return()=>{ok=false}},[]);
+ useEffect(()=>{if(db&&usr)logAcc("abrir",0,"");},[db,usr]);
+ useEffect(()=>{if(!db)return;let u;try{u=db.collection("entregas").onSnapshot(sn=>setEnts(sn.docs.map(d=>({...(d.data()||{}),id:d.id}))),()=>{});}catch(e){}return()=>{try{u&&u()}catch(e){}};},[db]);
+ useEffect(()=>{if(!db||!isAdmin||view!=="panel")return;let u;try{u=db.collection("accesos").orderBy("t","desc").limit(500).onSnapshot(sn=>setLogs(sn.docs.map(d=>({...(d.data()||{}),id:d.id}))),()=>{});}catch(e){}return()=>{try{u&&u()}catch(e){}};},[db,isAdmin,view]);
+ /* reloj compartido y lista de equipos */
+ useEffect(()=>{if(!db)return;let u;try{u=db.doc("config/clase").onSnapshot(sn=>setClaseS(sn.exists?sn.data():null),()=>{});}catch(e){}return()=>{try{u&&u()}catch(e){}};},[db]);
+ useEffect(()=>{if(!db)return;let u;try{u=db.collection("teams").onSnapshot(sn=>{const o={};sn.docs.forEach(d=>{o[d.id]=d.data()||{}});setTeams(o);},()=>{});}catch(e){}return()=>{try{u&&u()}catch(e){}};},[db]);
+ useEffect(()=>{if(!db||view!=="panel")return;const un=[];
+  try{for(let n=1;n<=NT;n++)["p","r"].forEach(k=>un.push(db.collection("teams/"+n+"/"+(k==="p"?"porter":"rse")).onSnapshot(sn=>{const a=[];sn.docs.forEach(d=>{a[+d.id]=d.data()||{}});setAll(prev=>({...prev,[n]:{...(prev[n]||{p:[],r:[]}),[k]:a}}));},()=>{})));}catch(e){}
+  return()=>un.forEach(f=>{try{f()}catch(e){}});},[db,view]);
+ const paths=t=>{const o={m:"teams/"+t,g:"grades/"+t};for(let i=0;i<5;i++)o["p"+i]="teams/"+t+"/porter/"+i;for(let i=0;i<4;i++)o["r"+i]="teams/"+t+"/rse/"+i;return o;};
+ const inTeam=view==="work"||view==="report"||view==="entrega";
+ useEffect(()=>{if(!db||!team||demo||!inTeam)return;const PP=paths(team),un=[];
+  const apply=(path,d)=>{let x=d||{};pend.current.forEach(v=>{if(v.path===path)x=setIn(x,v.p,v.v)});setDocs(prev=>({...prev,[path]:x}));};
+  try{Object.values(PP).forEach(path=>un.push(db.doc(path).onSnapshot(sn=>apply(path,sn.exists?sn.data():{}),()=>{})));}catch(e){}
+  return()=>un.forEach(f=>{try{f()}catch(e){}});},[db,team,demo,inTeam]);
+ const PP=team?paths(team):{};
+ const meta=docs[PP.m]||{},P=[0,1,2,3,4].map(i=>docs[PP["p"+i]]||{}),R=[0,1,2,3].map(i=>docs[PP["r"+i]]||{}),grade=docs[PP.g]||{};
+ const myName=(members(meta).find(([k])=>k===me)||[,{}])[1].n||"";
+ useEffect(()=>{if(!room)return;let off;try{off=room.onPeers(ch=>setPeers((ch&&ch.peers)||[]));}catch(e){}return()=>{try{typeof off==="function"&&off()}catch(e){}};},[room]);
+ useEffect(()=>{if(!room)return;try{room.presence({team:view==="work"&&!demo?team:0,tab:view==="work"?tab:"",who:myName}).catch(()=>{})}catch(e){}},[room,team,tab,view,demo,myName]);
+ const peers=peersRaw.filter(p=>p.presence&&p.presence.team===team&&!demo).map(p=>({tab:p.presence.tab,me:p.isMe,who:typeof p.presence.who==="string"?p.presence.who:""}));
+
+ const write=(path,p,v)=>{
+  const ea=(me&&!demo&&path.indexOf("teams/")===0&&p[0]!=="mem"&&p[0]!=="ed"&&p[0]!=="roles")?{m:me,n:myName,t:Date.now()}:null,ek=p.join("_");
+  setDocs(prev=>{let x=setIn(prev[path]||{},p,v);if(ea)x=setIn(x,["ed",ek],ea);return {...prev,[path]:x};});
+  if(!db||demo)return;
+  const key=path+"|"+p.join(".");pend.current.set(key,{path,p,v});
+  clearTimeout(timers.current[key]);
+  timers.current[key]=setTimeout(()=>{const r=db.doc(path),done=()=>setTimeout(()=>{const c=pend.current.get(key);if(c&&c.v===v)pend.current.delete(key)},1500);
+   const pl=ea?{...nest(p,v),ed:{[ek]:ea}}:nest(p,v);r.update(pl).then(done).catch(()=>{r.get().then(sn=>sn.exists?r.update(pl):r.set(setIn(docsRef.current[path]||{},p,v))).then(done).catch(()=>{});});},450);
+ };
+ const setMe=id=>{setMeS(id);lsSet("aud-me-"+team,id);};
+ const go=async(t,who,newName)=>{
+  setDemo(false);setTeam(t);setTab("eq");setSub({po:0,rs:0});
+  let id=who;
+  if(newName){id="m"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);const path="teams/"+t,val={n:newName,t:Date.now()};
+   setDocs(prev=>({...prev,[path]:setIn(prev[path]||{},["mem",id],val)}));
+   if(db){try{const r=db.doc(path),sn=await r.get();if(sn.exists)await r.update({mem:{[id]:val}});else await r.set({mem:{[id]:val}});}catch(e){}}}
+  setMeS(id);lsSet("aud-me-"+t,id);lsSet("aud-last",JSON.stringify({t,id}));
+  logAcc("equipo",t,newName||str(getIn(teams,[t,"mem",id,"n"])));
+  setView("work");window.scrollTo(0,0);
+ };
+ const addMem=async(t,names)=>{const add={},now0=Date.now();names.forEach((n,i)=>{add["m"+now0.toString(36)+i+Math.random().toString(36).slice(2,5)]={n,t:now0+i};});
+  if(db){const r=db.doc("teams/"+t),sn=await r.get();if(sn.exists)await r.update({mem:add});else await r.set({mem:add});}
+  else setTeams(prev=>({...prev,[t]:{...(prev[t]||{}),mem:{...((prev[t]||{}).mem||{}),...add}}}));return add;};
+ const openDemo=()=>{setDemo(true);setTeam(9);const Q=paths(9),o={[Q.m]:DMETA,[Q.g]:{}};DP.forEach((d,i)=>o[Q["p"+i]]=d);DR.forEach((d,i)=>o[Q["r"+i]]=d);setDocs(o);setMeS("a");setTab("po");setView("work");window.scrollTo(0,0);};
+ const leave=()=>{setView("start");setDemo(false);setTeam(0);setDocs({});setMeS("");pend.current.clear();window.scrollTo(0,0);};
+ const submit=async()=>{if(!db||demo||!team)throw new Error("x");const uid=await myId(),t=Date.now();
+  await db.collection("entregas").doc("e"+team+"_"+t).set({team,grupo:grpOf(team).n,equipo:loc(team),emp:empOf(team).n,t,uid,n:myName||"",meta:clean(meta),P:P.map(clean),R:R.map(clean)});
+  try{await db.collection("accesos").doc("a"+t.toString(36)+Math.random().toString(36).slice(2,6)).set({ev:"entrega",team,n:myName||"",uid,t});}catch(e){}};
+ const setClase=v=>{setClaseS(v);if(db)db.doc("config/clase").set(v).catch(()=>{});};
+
+ if(view==="start")return h(Start,{teams,go,addMem,demo:openDemo,live:!!db,isAdmin,openPanel:()=>setView("panel"),clase,now});
+ if(view==="entrega"&&snap)return h(Report,{team:snap.team,meta:snap.meta||{},P:[0,1,2,3,4].map(i=>(snap.P||[])[i]||{}),R:[0,1,2,3].map(i=>(snap.R||[])[i]||{}),grade,isAdmin,demo:false,snapT:snap.t,snapBy:str(snap.n),wGrade:(p,v)=>write(PP.g,p,v),back:()=>{setView("panel");setSnap(null);window.scrollTo(0,0);},leave});
+ if(view==="panel")return h(Panel,{teams,all,isAdmin,clase,setClase,now,ents,logs,usr,openEnt:e=>{setDemo(false);setSnap(e);setTeam(e.team);setView("entrega");window.scrollTo(0,0);},back:()=>setView("start"),openTeam:n=>{setDemo(false);setTeam(n);setView("report");window.scrollTo(0,0);}});
+ if(view==="report")return h(Report,{team,meta,P,R,grade,isAdmin,demo,yo:myName,live:!!db,ent:team?lastOf(ents,team):null,submit,wGrade:(p,v)=>write(PP.g,p,v),back:()=>{setView(demo||me?"work":"panel");window.scrollTo(0,0);},leave});
+ return h(Work,{team,meta,P,R,me,setMe,tab,setTab,sub,setSub,peers,live:!!db,demo,clase,now,leave,
+  wm:(p,v)=>write(PP.m,p,v),wp:(i,p,v)=>write(PP["p"+i],p,v),wr:(i,p,v)=>write(PP["r"+i],p,v),report:()=>{setView("report");window.scrollTo(0,0);}});
+}
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+
+</body></html>
