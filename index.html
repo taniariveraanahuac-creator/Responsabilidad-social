@@ -114,6 +114,53 @@ textarea{min-height:84px;resize:vertical}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+/* ---------- Guardado local (GitHub Pages) ----------
+   Fuera de claude.ai no existe el almacén compartido. Este bloque ofrece la misma interfaz
+   (colecciones, documentos, onSnapshot, set, update) guardando en el navegador (localStorage),
+   para que el avance no se pierda al recargar y se pueda generar el reporte. */
+(function(){
+ if(window.claude&&window.claude.use)return;
+ var PRE="rse-db:",subs=new Set();
+ window.__RSE_LOCAL=true;
+ function isObj(x){return x&&typeof x==="object"&&!Array.isArray(x);}
+ function merge(a,b){var o=Object.assign({},isObj(a)?a:{});Object.keys(b||{}).forEach(function(k){var v=b[k];o[k]=(isObj(v)&&isObj(o[k]))?merge(o[k],v):v;});return o;}
+ function rd(p){try{var v=localStorage.getItem(PRE+p);return v?JSON.parse(v):undefined;}catch(e){return undefined;}}
+ function wr(p,v){try{if(v===undefined)localStorage.removeItem(PRE+p);else localStorage.setItem(PRE+p,JSON.stringify(v));}catch(e){}fire();}
+ function keys(){var a=[];try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf(PRE)===0)a.push(k.slice(PRE.length));}}catch(e){}return a;}
+ function docSnap(p){var v=rd(p),id=p.split("/").pop();return {id:id,exists:v!==undefined,data:function(){return v===undefined?undefined:JSON.parse(JSON.stringify(v));}};}
+ function colDocs(c){var pre=c+"/";return keys().filter(function(k){return k.indexOf(pre)===0&&k.slice(pre.length).indexOf("/")<0;}).map(docSnap);}
+ var t0=null;function fire(){if(t0)return;t0=setTimeout(function(){t0=null;subs.forEach(function(f){try{f();}catch(e){}});},30);}
+ window.addEventListener("storage",function(e){if(!e.key||e.key.indexOf(PRE)===0)fire();});
+ function watch(get,cb){var last=null;function run(){var sn=get(),k;try{k=JSON.stringify(sn.docs?sn.docs.map(function(d){return [d.id,d.data()];}):[sn.exists,sn.data()]);}catch(e){k=Math.random();}if(k===last)return;last=k;cb(sn);}
+  subs.add(run);setTimeout(run,0);return function(){subs.delete(run);};}
+ function doc(p){return {id:p.split("/").pop(),path:p,
+  get:function(){return Promise.resolve(docSnap(p));},
+  set:function(v,o){wr(p,(o&&o.merge)?merge(rd(p),v):JSON.parse(JSON.stringify(v)));return Promise.resolve();},
+  update:function(v){wr(p,merge(rd(p),JSON.parse(JSON.stringify(v))));return Promise.resolve();},
+  delete:function(){wr(p,undefined);return Promise.resolve();},
+  onSnapshot:function(cb){return watch(function(){return docSnap(p);},cb);}};}
+ function query(c,ord,lim){
+  function snapC(){var d=colDocs(c);if(ord)d.sort(function(a,b){var x=(a.data()||{})[ord.f],y=(b.data()||{})[ord.f];return (x>y?1:x<y?-1:0)*ord.d;});if(lim)d=d.slice(0,lim);return {docs:d,size:d.length,empty:!d.length};}
+  return {
+  orderBy:function(f,dir){return query(c,{f:f,d:dir==="desc"?-1:1},lim);},
+  limit:function(n){return query(c,ord,n);},
+  doc:function(id){return doc(c+"/"+id);},
+  get:function(){return Promise.resolve(snapC());},
+  onSnapshot:function(cb){return watch(snapC,cb);}};}
+ var db={collection:function(c){return query(c,null,0);},doc:doc};
+ function uid(){var k="rse-uid",v=null;try{v=localStorage.getItem(k);if(!v){v="u"+Date.now().toString(36)+Math.random().toString(36).slice(2,7);localStorage.setItem(k,v);}}catch(e){v="anon";}return v;}
+ var user={id:function(){return Promise.resolve(uid());},canEdit:function(){return Promise.resolve(false);}};
+ window.claude={use:function(n){return n==="db"?Promise.resolve(db):n==="user"?Promise.resolve(user):Promise.reject(new Error("no disponible"));}};
+ /* respaldo: exportar e importar todo el avance guardado en este navegador */
+ window.__rseExport=function(){var o={app:"auditoria-rse",v:1,t:Date.now(),data:{}};keys().forEach(function(k){o.data[k]=rd(k);});
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:"application/json"}));
+  var d=new Date(),f="avance-auditoria-rse-"+d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0")+".json";
+  a.download=f;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);};
+ window.__rseImport=function(file,done){var r=new FileReader();r.onload=function(){try{var o=JSON.parse(r.result);if(!o||o.app!=="auditoria-rse"||!o.data)throw new Error("no es un archivo de avance de esta auditoría");
+   Object.keys(o.data).forEach(function(k){var cur=rd(k),inc=o.data[k];wr(k,(isObj(cur)&&isObj(inc))?merge(cur,inc):inc);});done&&done(null,Object.keys(o.data).length);}catch(e){done&&done(e);}};r.readAsText(file);};
+})();
+</script>
+<script>
 const {useState,useEffect,useRef}=React, h=React.createElement;
 const MINC=60;
 /* ---------- Empresas asignadas y directorio de fuentes ---------- */
@@ -203,6 +250,20 @@ function partOf(meta,P,R){const o={};const add=d=>Object.values((d&&d.ed)||{}).f
 const localDl={save:async({filename,data})=>{const ty=/\.pdf$/.test(filename)?"application/pdf":/\.csv$/.test(filename)?"text/csv;charset=utf-8":/\.json$/.test(filename)?"application/json":"text/html;charset=utf-8";const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([data],{type:ty}));a.download=filename;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);}};
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+const LOCAL=!!window.__RSE_LOCAL;
+function Respaldo({compact}){
+ const [msg,setMsg]=useState("");const ref=useRef(null);
+ if(!LOCAL)return null;
+ const imp=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;window.__rseImport(f,(err,n)=>{setMsg(err?"⚠️ No se pudo importar: "+err.message:"✅ Avance importado ("+n+" registros). Recargando…");if(!err)setTimeout(()=>location.reload(),900);});e.target.value="";};
+ const btns=h("div",{style:{display:"flex",gap:8,flexWrap:"wrap"}},
+   h("button",{className:"btn alt sm",onClick:()=>{window.__rseExport();setMsg("✅ Archivo de avance descargado.");}},"⬇️ Exportar avance"),
+   h("button",{className:"btn alt sm",onClick:()=>ref.current&&ref.current.click()},"⬆️ Importar avance"),
+   h("input",{ref,type:"file",accept:".json,application/json",style:{display:"none"},onChange:imp}));
+ const m=msg?h("p",{className:"sm",role:"status",style:{marginTop:6}},msg):null;
+ if(compact)return h("div",{className:"noprint",style:{marginTop:8}},btns,m);
+ return h("div",{className:"card noprint",style:{marginTop:16}},h("h2",null,"💾 Tu avance"),
+  h("p",{className:"mut sm"},"Todo se guarda solo en este navegador mientras escribes, aunque cierres o recargues la página. Para seguir en otra computadora o pasarle el trabajo a un compañero, exporta el avance y que la otra persona lo importe."),btns,m);
+}
 
 function Sem({n}){const c=col(n);return h("div",{className:"sem",role:"img","aria-label":lab(n)},["r","y","g"].map(k=>h("i",{key:k,className:k+(k===c?" on":"")})));}
 function Radar({vals}){
@@ -265,7 +326,7 @@ function SubirBS({fname,btn}){
    h("li",null,"Cuando su equipo termine la evaluación, presiona ",h("b",null,"«📄 Mi reporte»"),"."),
    h("li",null,"Presiona ",h("b",null,"«Descargar PDF para Brightspace»"),". El archivo ya lleva tu nombre, tu grupo y tu equipo."),
    h("li",null,"En Brightspace abre la actividad ",h("b",null,"Auditoría de RSE"),", presiona «Agregar archivo», elige el PDF y envía."),
-   h("li",null,"La persona con la responsabilidad de ",h("b",null,"Coordinación")," además presiona «Entregar reporte final» para que la docente reciba la versión del equipo.")),
+   LOCAL?h("li",null,"Si trabajaron en una sola computadora, cada integrante elige su nombre en «¿Quién eres tú?» (pestaña Equipo) y descarga su propio PDF. Si trabajaron en varias, usen «Exportar avance» e «Importar avance» para juntar el trabajo."):h("li",null,"La persona con la responsabilidad de ",h("b",null,"Coordinación")," además presiona «Entregar reporte final» para que la docente reciba la versión del equipo.")),
   fname?h("p",{className:"sm"},"Tu archivo se llamará: ",h("code",{style:{overflowWrap:"anywhere"}},fname+".pdf")):null,
   btn||null);
 }
@@ -329,7 +390,7 @@ function Start({teams,go,addMem,demo,live,isAdmin,openPanel,clase,now}){
  return h("div",{className:"wrap"},
   h("div",{className:"bar"},h("span",{className:"chip"},"Auditor de Responsabilidad Social")),
   h("h1",null,"Auditoría de RSE"),
-  h("p",{className:"mut",style:{maxWidth:"68ch"}},"Cada equipo audita una empresa mexicana. Primero analizan su entorno competitivo con las 5 fuerzas de Porter, después auditan su responsabilidad social en 4 áreas y al final la evalúan. Todos los integrantes trabajan al mismo tiempo desde su propio dispositivo y, al final, cada uno sube el reporte a Brightspace."),
+  h("p",{className:"mut",style:{maxWidth:"68ch"}},"Cada equipo audita una empresa mexicana. Primero analizan su entorno competitivo con las 5 fuerzas de Porter, después auditan su responsabilidad social en 4 áreas y al final la evalúan. "+(LOCAL?"El equipo trabaja en una computadora (o se pasa el avance con «Exportar avance»); todo se guarda solo en el navegador y, al final, cada integrante descarga su PDF y lo sube a Brightspace.":"Todos los integrantes trabajan al mismo tiempo desde su propio dispositivo y, al final, cada uno sube el reporte a Brightspace.")),
   (()=>{let L=null;try{L=JSON.parse(lsGet("aud-last")||"null")}catch(e){}const x=L&&members(teams[L.t]).find(([id])=>id===L.id);
    return x?h("div",{className:"call ok"},h("h3",null,"👋 Hola, "+x[1].n),h("p",null,tLab(L.t)+" · "+empOf(L.t).n),
     h("button",{className:"btn",style:{marginTop:8},onClick:()=>go(L.t,L.id,null)},"Continuar donde me quedé")):null;})(),
@@ -360,12 +421,13 @@ function Start({teams,go,addMem,demo,live,isAdmin,openPanel,clase,now}){
     h("div",{className:"grid"},ms.map(([id,x])=>h("button",{key:id,className:"opt","aria-pressed":who===id,onClick:()=>setWho(id)},h("b",null,x.n)))),
     h("button",{className:"btn",disabled:!who,onClick:()=>go(t,who,null)},"Entrar a la auditoría")):null,
    h("div",{style:{display:"flex",gap:10,flexWrap:"wrap",marginTop:12}},h("button",{className:"btn alt",onClick:demo},"Ver ejemplo resuelto")),
-   h("p",{className:"mut sm",style:{marginTop:10}},live?"🟢 En vivo: todo se guarda solo y se comparte con tu equipo.":"⚪ Sin conexión al almacén compartido: el trabajo se queda solo en esta pantalla.")),
+   h("p",{className:"mut sm",style:{marginTop:10}},LOCAL?"💾 Tu avance se guarda solo en este navegador.":live?"🟢 En vivo: todo se guarda solo y se comparte con tu equipo.":"⚪ Sin conexión al almacén compartido: el trabajo se queda solo en esta pantalla.")),
+  h(Respaldo,{}),
   h("div",{style:{marginTop:16}},h(SubirBS,{})),
   h("details",{className:"card",style:{marginTop:16}},h("summary",{style:{cursor:"pointer",fontWeight:800}},"📋 ¿Qué se pide? Criterios y ejemplos"),h("div",{style:{marginTop:10}},h(QueSePide))),
   h("details",{className:"card",style:{marginTop:16}},h("summary",{style:{cursor:"pointer",fontWeight:800}},"🧭 Instrucciones paso a paso"),h("div",{style:{marginTop:10}},h(Instr,{clase,now}))),
   h("details",{className:"card",style:{marginTop:16}},h("summary",{style:{cursor:"pointer",fontWeight:800}},"🔗 Directorio de fuentes"),h("div",{style:{marginTop:10}},h(Directory,{team:0}))),
-  live&&h("div",{className:"card",style:{marginTop:16}},
+  live&&!LOCAL&&h("div",{className:"card",style:{marginTop:16}},
    h("div",{className:"bar"},h("h2",{style:{margin:0}},"Panel docente"),h("button",{className:"btn alt sm",onClick:openPanel},"Abrir panel")),
    h("p",{className:"mut sm"},isAdmin?"Sigue el avance, la participación y las entregas de los equipos de cada grupo.":"Avance de los equipos en este momento.")));
 }
@@ -522,9 +584,10 @@ function Work({team,meta,P,R,wm,wp,wr,me,setMe,tab,setTab,sub,setSub,peers,live,
  return h("div",{className:"wrap"},
   h("div",{className:"bar"},
    h("div",{style:{minWidth:0}},h("span",{className:"chip"},demo?"Ejemplo resuelto":tLab(team)),
-    h("span",{className:"mut sm",style:{marginLeft:10,fontWeight:600}},demo?"Empresa ficticia; no se guarda":live?"🟢 En vivo"+(here.length?" · conectados: "+here.map(p=>p.who||"alguien").join(", "):""):"⚪ Solo en esta pantalla"),
+    h("span",{className:"mut sm",style:{marginLeft:10,fontWeight:600}},demo?"Empresa ficticia; no se guarda":LOCAL?"💾 Guardado automático en este navegador":live?"🟢 En vivo"+(here.length?" · conectados: "+here.map(p=>p.who||"alguien").join(", "):""):"⚪ Solo en esta pantalla"),
     h("h2",{style:{marginTop:8,overflowWrap:"anywhere"}},E.n),h("p",{className:"mut sm"},E.s+(me&&!demo?" · Tú: "+((ms.find(([k])=>k===me)||[,{}])[1].n||"")+(rolesOf(meta,me).length?" · "+rolesOf(meta,me).join(" y "):""):""))),
    h("div",{style:{display:"flex",gap:8,flexWrap:"wrap",alignItems:"center"}},h(Clock,{clase,now}),h("button",{className:"btn alt sm",disabled:!canReport,onClick:report},"Ver reporte"),h("button",{className:"btn alt sm",onClick:leave},"Cambiar equipo"))),
+  !demo?h(Respaldo,{compact:true}):null,
   !demo&&live&&!me&&h("p",{className:"pill wait",style:{whiteSpace:"normal"}},"Elige quién eres en la pestaña Equipo para ver tus tareas marcadas."),
   !demo&&live&&me&&!rolesOf(meta,me).length&&h("p",{className:"pill wait",style:{whiteSpace:"normal"}},"Aún no asumes una responsabilidad. Elige una en la pestaña Equipo."),
   !demo?(()=>{const items=[["5 fuerzas de Porter validadas",pc.filter(c=>c.val).length,5],["4 áreas de RSE validadas",rc.filter(c=>c.val).length,4],["4 áreas evaluadas",nEval,4],["Relación Porter + RSE",str(meta.rel).trim().length>=MINC?1:0,1],["Dictamen del equipo",str(meta.concl).trim().length>=MINC?1:0,1]];
@@ -589,7 +652,7 @@ function Report({team,meta,P,R,grade,isAdmin,wGrade,back,leave,demo,ent,submit,s
   msg?h("p",{className:"noprint mut sm",role:"status",style:{textAlign:"right",marginTop:6}},msg):null,
   dl===null?h("p",{className:"noprint mut sm",style:{textAlign:"right",marginTop:6}},"La descarga no está disponible en esta vista."):null,
   snapT?h("div",{className:"call ok noprint"},h("h3",null,"📦 Versión entregada"),h("p",null,"Entregada el "+fmt(snapT)+(snapBy?" por "+snapBy:"")+". Es una copia congelada: lo que el equipo cambie después no la modifica.")):null,
-  !demo&&!snapT&&live?h("div",{className:"call "+(ent?"ok":"must")+" noprint"},
+  !demo&&!snapT&&live&&!LOCAL?h("div",{className:"call "+(ent?"ok":"must")+" noprint"},
    h("h3",null,ent?"✅ Reporte final entregado":"📤 Entrega final del equipo"),
    h("p",null,ent?"Último envío: "+fmt(ent.t)+(str(ent.n)?" por "+ent.n:"")+". Si corrigen algo, pueden volver a entregar; se guarda como versión nueva.":"Cuando el equipo termine, una sola persona entrega el reporte. Se guarda una copia congelada que la docente revisa y califica."),
    conf?h("div",{style:{display:"flex",gap:8,flexWrap:"wrap",marginTop:8}},h("button",{className:"btn",disabled:sBusy,onClick:doSubmit},sBusy?"Guardando…":"Sí, entregar ahora"),h("button",{className:"btn alt",disabled:sBusy,onClick:()=>setConf(false)},"Cancelar"))
