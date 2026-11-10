@@ -30,13 +30,15 @@ La versión original se publicó como página de Claude (claude.ai), que aporta 
 | Función | En Claude (claude.ai) | En GitHub Pages |
 |---|---|---|
 | Ver instrucciones, criterios y ejemplo resuelto | ✅ | ✅ |
-| Registrar equipo y trabajar en las fases | ✅ | ✅ solo en ese navegador y mientras la página siga abierta |
-| Trabajo simultáneo del equipo desde varios dispositivos | ✅ | ❌ |
-| Guardado automático del avance | ✅ | ❌ se pierde al recargar |
-| Descargar el reporte en PDF o HTML | ✅ | ✅ |
+| Registrar equipo (grupos Liderazgo y Administración) y trabajar en las fases | ✅ | ✅ |
+| Guardado automático del avance | ✅ en la nube | ✅ en el navegador (no se pierde al recargar ni al cerrar) |
+| Trabajo simultáneo del equipo desde varios dispositivos | ✅ | ⚠️ con «Exportar avance» / «Importar avance» |
+| Descargar el reporte en PDF | ✅ | ✅ cada integrante con su nombre |
 | Panel docente, registro de accesos, participación y entregas | ✅ | ❌ |
 
-**Recomendación:** para la clase, usa el enlace de Claude. El repositorio sirve como respaldo del código, para compartirlo con otros docentes y como punto de partida si se conecta una base de datos propia (por ejemplo Firebase o Supabase) para tener trabajo compartido fuera de Claude.
+En GitHub Pages la página usa un **guardado local** con la misma interfaz que el almacén de Claude: cada cambio se guarda en el `localStorage` del navegador. Lo recomendable es que cada equipo trabaje en una computadora; al final cada integrante elige su nombre en «¿Quién eres tú?» y descarga su PDF. Si el equipo trabaja en varias computadoras, una persona usa **Exportar avance** (descarga un `.json`) y las demás lo cargan con **Importar avance**.
+
+**Siguiente paso opcional:** para tener trabajo compartido en vivo y panel docente fuera de Claude, se puede conectar una base de datos propia (por ejemplo Firebase), que usa la misma interfaz que el guardado local.
 
 ## Publicar en GitHub Pages
 
